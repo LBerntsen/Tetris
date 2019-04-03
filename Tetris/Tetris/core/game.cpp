@@ -39,8 +39,8 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 		y = y + aTileSize;
 		x = 0;
 	}
-	mSize.setHeight(aRows * aTileSize);
-	mSize.setWidth(aCols * aTileSize);
+	mSize.setHeight((aRows + 1) * aTileSize);
+	mSize.setWidth((aCols + 1) * aTileSize);
 }
 
 QSize
