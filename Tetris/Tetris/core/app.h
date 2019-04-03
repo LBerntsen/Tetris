@@ -5,6 +5,8 @@
 #include <QObject>
 
 // Forward declarations
+class QGraphicsScene;
+class QGraphicsTextItem;
 class MainWindow;
 class Game;
 
@@ -22,6 +24,7 @@ public:
 
 	static App *sInstance();
 	MainWindow *getMainWindow() const;
+	QGraphicsScene *getScene() const;
 
 private:
 	static App *sThis;

@@ -7,6 +7,7 @@
 // Project specific header files
 #include "ui_mainwindow.h"
 
+class QGraphicsView;
 class QCloseEvent;
 class MenuBar;
 
@@ -16,6 +17,7 @@ class MainWindow : public QMainWindow
 public:
 	MainWindow();
 	virtual ~MainWindow();
+	QGraphicsView *getView();
 	
 signals:
 

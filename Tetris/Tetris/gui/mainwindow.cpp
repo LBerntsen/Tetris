@@ -3,12 +3,11 @@
 
 // QT header files
 #include <QCloseEvent>
-#include <QLabel>
 #include <QMenu>
 #include <QMenuBar>
 #include <QAction>
 #include <QDebug>
-#include <QFileDialog>
+#include <QGraphicsView>
 
 // Project specific header files
 #include "core/app.h"
@@ -17,6 +16,7 @@
 MainWindow::MainWindow()
 {
 	mGui.setupUi(this);
+	this->setWindowFlags(this->windowFlags() |= Qt::MSWindowsFixedSizeDialogHint);
 }
 
 // Destructor
@@ -29,4 +29,10 @@ void
 MainWindow::closeEvent(QCloseEvent *aEvent)
 {
 	QWidget::closeEvent(aEvent);
+}
+
+QGraphicsView *
+MainWindow::getView()
+{
+	return mGui.mView;
 }

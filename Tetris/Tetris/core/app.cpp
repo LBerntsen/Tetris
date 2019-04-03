@@ -21,7 +21,9 @@ App::App()
 	mGame = new Game();
 
 	mMainWindow = new MainWindow();
-	mMainWindow->show();
+	mMainWindow->show();	
+	mMainWindow->getView()->setScene(mGame->getScene());
+	mMainWindow->resize(mGame->getMapSize());
 }
 
 
@@ -31,7 +33,6 @@ App::~App()
 {
 	
 }
-
 
 /** Get pointer to this application. Create it if it's not existing.
 */
@@ -50,4 +51,10 @@ MainWindow *
 App::getMainWindow() const
 {
 	return mMainWindow;
+}
+
+QGraphicsScene *
+App::getScene() const
+{
+	return mGame->getScene();
 }
