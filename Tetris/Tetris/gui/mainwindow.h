@@ -21,10 +21,10 @@ public:
 	
 signals:
 
-public slots:
+public slots :
+	void onExitClicked();
 
 private:
-	void closeEvent(QCloseEvent *aEvent);
 	Ui::Tetris mGui;
 };
 #endif

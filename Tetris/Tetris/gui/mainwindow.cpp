@@ -17,6 +17,8 @@ MainWindow::MainWindow()
 {
 	mGui.setupUi(this);
 	this->setWindowFlags(this->windowFlags() |= Qt::MSWindowsFixedSizeDialogHint);
+
+	connect(mGui.mExit, &QAction::triggered, this, &MainWindow::onExitClicked);
 }
 
 // Destructor
@@ -25,14 +27,14 @@ MainWindow::~MainWindow()
 
 }
 
-void
-MainWindow::closeEvent(QCloseEvent *aEvent)
-{
-	QWidget::closeEvent(aEvent);
-}
-
 QGraphicsView *
 MainWindow::getView()
 {
 	return mGui.mView;
+}
+
+void
+MainWindow::onExitClicked()
+{
+	exit(0);
 }

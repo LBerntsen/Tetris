@@ -25,7 +25,7 @@ App::App()
 	mMainWindow->getView()->setScene(mGame->getScene());
 	mMainWindow->resize(mGame->getMapSize());
 
-	//Startknapp
+	//Start Meny
 	startGameMenu();
 }
 
@@ -71,7 +71,7 @@ App::startGameMenu()
 	startDialog.setText(QString("Lukas lagde Tetris for han er kul, vil du spille?"));
 
 	QPushButton *yesButton = startDialog.addButton(QString("Ja"), QMessageBox::AcceptRole);
-	QPushButton *noButton = startDialog.addButton(QString("Nei"), QMessageBox::RejectRole);
+	QPushButton *noButton = startDialog.addButton(QString("Nei (Avslutt spillet)"), QMessageBox::RejectRole);
 	
 	int execCode = startDialog.exec();
 	
@@ -81,7 +81,6 @@ App::startGameMenu()
 	}
 	else if (execCode == QMessageBox::RejectRole)
 	{
-		//Exit Game
 		exit(0);
 	}
 }
