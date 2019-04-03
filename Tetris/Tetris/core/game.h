@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QSize>
+#include <QGraphicsItem>
 
 class GameScene;
 
@@ -16,12 +17,14 @@ public:
 	virtual ~Game();
 	GameScene *getScene();
 	QSize getMapSize() const;
+	int getTileSize() const;
 	void makeGrid(int aTileSize, int aRow, int aCols);
 	void gameStart();
 
 private:
 	GameScene *mScene;
 	QSize mSize;
+	QGraphicsItem *mBlock;
 
 private slots:
 	void keyLeftReciever();

@@ -7,11 +7,12 @@
 #include <QGraphicsItem>
 #include <QGraphicsRectItem>
 #include <QBrush>
+#include <QPointF>
 
 Game::Game()
 {
 	mScene = new GameScene;
-	makeGrid(30, 22, 12);
+	makeGrid(getTileSize(), 22, 12);
 
 	connect(mScene, SIGNAL(sigKeyLeftPressed()), this, SLOT(keyLeftReciever()));
 	connect(mScene, SIGNAL(sigKeyRightPressed()), this, SLOT(keyRightReciever()));
@@ -59,7 +60,7 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 void
 Game::gameStart()
 {
-	mScene->addRect(60, 30, 30, 30, QPen(), QBrush(QColor(Qt::blue)));
+	mBlock = mScene->addRect(60, 30, 30, 30, QPen(), QBrush(QColor(Qt::blue)));
 }
 
 QSize
@@ -68,14 +69,32 @@ Game::getMapSize() const
 	return mSize;
 }
 
+int
+Game::getTileSize() const
+{
+	return 30;
+}
+
 void
 Game::keyLeftReciever()
 {
+	QPointF blockPos = mBlock->pos();
+	int posX = 0;
+
+	posX = blockPos.x() - getTileSize();
+	blockPos.setX(posX);
 	qDebug() << "Left";
+	mBlock->setPos(blockPos);
 }
 
 void
 Game::keyRightReciever()
 {
+	QPointF blockPos = mBlock->pos();
+	int posX = 0;
+
+	posX = blockPos.x() + getTileSize();
+	blockPos.setX(posX);
 	qDebug() << "Right";
+	mBlock->setPos(blockPos);
 }
