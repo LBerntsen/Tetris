@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <QGraphicsRectItem>
+#include <QBrush>
 
 Game::Game()
 {
@@ -33,8 +34,15 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 	{
 		for (int col = 0; col < aCols; col++)
 		{
-			mScene->addRect(x, y, aTileSize, aTileSize);
-			x = x + aTileSize;
+			if (col == 0 || col == aCols - 1)
+			{
+				mScene->addRect(x, y, aTileSize, aTileSize, QPen(), QBrush(QColor(Qt::gray)));
+				x = x + aTileSize;
+			}
+			else {
+				mScene->addRect(x, y, aTileSize, aTileSize);
+				x = x + aTileSize;
+			}
 		}
 		y = y + aTileSize;
 		x = 0;
