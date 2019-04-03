@@ -4,6 +4,7 @@
 // QT header files
 #include <QApplication>
 #include <QDebug>
+#include <QMessageBox>
 
 // Project specific header files
 #include "gui/mainwindow.h"
@@ -17,13 +18,15 @@ App *App::sThis = NULL;
 App::App()
 {
 	sThis = this;
-	
 	mGame = new Game();
-
 	mMainWindow = new MainWindow();
+	//Vise eller tegne på bildet
 	mMainWindow->show();	
 	mMainWindow->getView()->setScene(mGame->getScene());
 	mMainWindow->resize(mGame->getMapSize());
+
+	//Startknapp
+	startGameMenu();
 }
 
 
@@ -57,4 +60,28 @@ QGraphicsScene *
 App::getScene() const
 {
 	return mGame->getScene();
+}
+
+void
+App::startGameMenu()
+{
+	QMessageBox startDialog;
+
+	startDialog.setIcon(QMessageBox::Question);
+	startDialog.setText(QString("Lukas lagde Tetris for han er kul, vil du spille?"));
+
+	QPushButton *yesButton = startDialog.addButton(QString("Ja"), QMessageBox::AcceptRole);
+	QPushButton *noButton = startDialog.addButton(QString("Nei"), QMessageBox::RejectRole);
+	
+	int execCode = startDialog.exec();
+	
+	if (execCode == QMessageBox::AcceptRole)
+	{
+		//Start Game
+	}
+	else if (execCode == QMessageBox::RejectRole)
+	{
+		//Exit Game
+		exit(0);
+	}
 }
