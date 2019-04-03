@@ -17,7 +17,7 @@ public:
 	GameScene *getScene();
 	QSize getMapSize() const;
 	void makeGrid(int aTileSize, int aRow, int aCols);
-	void startGame();
+	void gameStart();
 
 private:
 	GameScene *mScene;

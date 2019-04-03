@@ -57,7 +57,7 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 }
 
 void
-Game::startGame()
+Game::gameStart()
 {
 	mScene->addRect(60, 30, 30, 30, QPen(), QBrush(QColor(Qt::blue)));
 }

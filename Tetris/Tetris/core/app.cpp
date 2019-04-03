@@ -78,7 +78,7 @@ App::startGameMenu()
 	
 	if (execCode == QMessageBox::AcceptRole)
 	{
-		mGame->startGame();
+		mGame->gameStart();
 	}
 	else if (execCode == QMessageBox::RejectRole)
 	{
