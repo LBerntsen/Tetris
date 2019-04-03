@@ -1,0 +1,7 @@
+*.user
+*.sdf
+*.suo
+GeneratedFiles
+x64
+*.db
+*.opendb

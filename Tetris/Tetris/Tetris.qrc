@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/tiles">
+        <file alias="gray">Resources/Tiles/gray.png</file>
+        <file alias="green">Resources/Tiles/green.png</file>
+        <file alias="invalid">Resources/Tiles/invalid.png</file>
+    </qresource>
+</RCC>
