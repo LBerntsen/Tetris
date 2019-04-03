@@ -7,24 +7,25 @@
 // Project specific header files
 #include "ui_mainwindow.h"
 
+class Game;
 class QGraphicsView;
 class QCloseEvent;
-class MenuBar;
 
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	MainWindow();
+	MainWindow(Game *aGame);
 	virtual ~MainWindow();
 	QGraphicsView *getView();
 	
 signals:
 
 public slots :
-	void onExitClicked();
 
 private:
 	Ui::Tetris mGui;
+	Game *mGame;
+
 };
 #endif

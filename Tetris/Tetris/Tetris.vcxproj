@@ -59,7 +59,7 @@
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -116,7 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="core\app.cpp" />
+    <ClCompile Include="core\block.cpp" />
     <ClCompile Include="core\game.cpp" />
+    <ClCompile Include="core\gameScene.cpp" />
     <ClCompile Include="core\main.cpp" />
     <ClCompile Include="gui\mainwindow.cpp" />
   </ItemGroup>
@@ -124,25 +126,13 @@
     <QtMoc Include="core\app.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\block.h" />
     <ClInclude Include="core\game.h" />
+    <QtMoc Include="core\gameScene.h" />
     <QtMoc Include="gui\mainwindow.h" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="gui\mainwindow.ui" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resources\Tiles\gray.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </Image>
-    <Image Include="Resources\Tiles\green.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </Image>
-    <Image Include="Resources\Tiles\invalid.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </Image>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

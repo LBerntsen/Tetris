@@ -1,16 +1,19 @@
 #include "core/game.h"
 #include "core/app.h"
+#include "core/block.h"
+#include "core/gameScene.h"
 
 #include <qDebug>
-#include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <QGraphicsRectItem>
 #include <QBrush>
 
 Game::Game()
 {
-	mScene = new QGraphicsScene;
+	mScene = new GameScene;
 	makeGrid(30, 22, 12);
+	mScene->addRect(60, 30, 30, 30, QPen(), QBrush(QColor(Qt::blue)));
+
 }
 
 
@@ -19,7 +22,7 @@ Game::~Game()
 
 }
 
-QGraphicsScene *
+GameScene *
 Game::getScene()
 {
 	return mScene;
@@ -29,7 +32,7 @@ void
 Game::makeGrid(int aTileSize, int aRows, int aCols)
 {
 	QColor tileColor;
-	tileColor = Qt::black;
+	tileColor = Qt::white;
 
 	int x = 0;
 	int y = 0;
@@ -40,7 +43,7 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 			if ((col == 0) || (col == aCols - 1) || (row == 0) || (row == aRows - 1))
 				tileColor = Qt::darkGray;
 			else {
-				tileColor = Qt::black;
+				tileColor = Qt::white;
 			}
 			mScene->addRect(x, y, aTileSize, aTileSize, QPen(), QBrush(QColor(tileColor)));
 			x = x + aTileSize;
@@ -56,4 +59,16 @@ QSize
 Game::getMapSize() const
 {
 	return mSize;
+}
+
+void
+Game::moveLeft()
+{
+	qDebug() << "Left";
+}
+
+void
+Game::moveRight()
+{
+	qDebug() << "Right";
 }

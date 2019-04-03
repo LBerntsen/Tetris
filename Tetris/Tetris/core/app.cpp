@@ -9,6 +9,7 @@
 // Project specific header files
 #include "gui/mainwindow.h"
 #include "core/game.h"
+#include "core/gameScene.h"
 
 App *App::sThis = NULL;
 
@@ -19,7 +20,7 @@ App::App()
 {
 	sThis = this;
 	mGame = new Game();
-	mMainWindow = new MainWindow();
+	mMainWindow = new MainWindow(mGame);
 	//Vise eller tegne på bildet
 	mMainWindow->show();	
 	mMainWindow->getView()->setScene(mGame->getScene());
@@ -56,7 +57,7 @@ App::getMainWindow() const
 	return mMainWindow;
 }
 
-QGraphicsScene *
+GameScene *
 App::getScene() const
 {
 	return mGame->getScene();

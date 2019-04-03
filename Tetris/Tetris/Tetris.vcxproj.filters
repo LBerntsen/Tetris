@@ -17,9 +17,6 @@
     <Filter Include="Gui">
       <UniqueIdentifier>{225c9800-cf4f-4448-a3c7-ce8238172104}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Tiles">
-      <UniqueIdentifier>{a6201879-4fbd-433a-8dc0-9c4fcb829284}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="core\app.cpp">
@@ -34,6 +31,12 @@
     <ClCompile Include="gui\mainwindow.cpp">
       <Filter>Gui</Filter>
     </ClCompile>
+    <ClCompile Include="core\block.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\gameScene.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="core\app.h">
@@ -42,9 +45,15 @@
     <QtMoc Include="gui\mainwindow.h">
       <Filter>Gui</Filter>
     </QtMoc>
+    <QtMoc Include="core\gameScene.h">
+      <Filter>Core</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\game.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\block.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
@@ -52,17 +61,6 @@
     <QtUic Include="gui\mainwindow.ui">
       <Filter>Gui</Filter>
     </QtUic>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resources\Tiles\invalid.png">
-      <Filter>Resource Files\Tiles</Filter>
-    </Image>
-    <Image Include="Resources\Tiles\gray.png">
-      <Filter>Resource Files\Tiles</Filter>
-    </Image>
-    <Image Include="Resources\Tiles\green.png">
-      <Filter>Resource Files\Tiles</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="Tetris.qrc">

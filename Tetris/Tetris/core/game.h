@@ -4,19 +4,21 @@
 #include <QString>
 #include <QSize>
 
-class QGraphicsScene;
+class GameScene;
 
 class Game
 {
 public:
 	Game();
 	virtual ~Game();
-	QGraphicsScene *getScene();
+	GameScene *getScene();
 	QSize getMapSize() const;
 	void makeGrid(int aTileSize, int aRow, int aCols);
+	void moveLeft();
+	void moveRight();
 
 private:
-	QGraphicsScene *mScene;
+	GameScene *mScene;
 	QSize mSize;
 
 };

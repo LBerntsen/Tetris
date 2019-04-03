@@ -4,21 +4,21 @@
 // QT header files
 #include <QCloseEvent>
 #include <QMenu>
-#include <QMenuBar>
-#include <QAction>
 #include <QDebug>
 #include <QGraphicsView>
 
 // Project specific header files
 #include "core/app.h"
+#include "core/block.h"
+#include "core/game.h"
 
 // Constructor
-MainWindow::MainWindow()
+MainWindow::MainWindow(Game *aGame)
 {
+	mGame = aGame;
 	mGui.setupUi(this);
 	this->setWindowFlags(this->windowFlags() |= Qt::MSWindowsFixedSizeDialogHint);
 
-	connect(mGui.mExit, &QAction::triggered, this, &MainWindow::onExitClicked);
 }
 
 // Destructor
@@ -31,10 +31,4 @@ QGraphicsView *
 MainWindow::getView()
 {
 	return mGui.mView;
-}
-
-void
-MainWindow::onExitClicked()
-{
-	exit(0);
 }
