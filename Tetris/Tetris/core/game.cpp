@@ -29,7 +29,7 @@ void
 Game::makeGrid(int aTileSize, int aRows, int aCols)
 {
 	QColor tileColor;
-	tileColor = Qt::white;
+	tileColor = Qt::black;
 
 	int x = 0;
 	int y = 0;
@@ -37,10 +37,10 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 	{
 		for (int col = 0; col < aCols; col++)
 		{
-			if (col == 0 || col == aCols - 1)
-				tileColor = Qt::gray;
+			if ((col == 0) || (col == aCols - 1) || (row == 0) || (row == aRows - 1))
+				tileColor = Qt::darkGray;
 			else {
-				tileColor = Qt::white;
+				tileColor = Qt::black;
 			}
 			mScene->addRect(x, y, aTileSize, aTileSize, QPen(), QBrush(QColor(tileColor)));
 			x = x + aTileSize;
