@@ -22,11 +22,9 @@ GameScene::keyPressEvent(QKeyEvent *event)
 	if (Qt::Key_Left == event->key())
 	{
 		emit sigKeyLeftPressed();
-		qDebug() << "Left";
 	}
 	else if (Qt::Key_Right== event->key())
 	{
 		emit sigKeyRightPressed();
-		qDebug() << "Right";
 	}
 }

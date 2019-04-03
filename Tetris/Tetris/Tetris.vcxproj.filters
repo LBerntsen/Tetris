@@ -48,11 +48,11 @@
     <QtMoc Include="core\gameScene.h">
       <Filter>Core</Filter>
     </QtMoc>
+    <QtMoc Include="core\game.h">
+      <Filter>Core</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core\game.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="core\block.h">
       <Filter>Core</Filter>
     </ClInclude>

@@ -12,8 +12,9 @@ Game::Game()
 {
 	mScene = new GameScene;
 	makeGrid(30, 22, 12);
-	mScene->addRect(60, 30, 30, 30, QPen(), QBrush(QColor(Qt::blue)));
 
+	connect(mScene, SIGNAL(sigKeyLeftPressed()), this, SLOT(keyLeftReciever()));
+	connect(mScene, SIGNAL(sigKeyRightPressed()), this, SLOT(keyRightReciever()));
 }
 
 
@@ -55,6 +56,12 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 	mSize.setWidth((aCols + 1) * aTileSize);
 }
 
+void
+Game::startGame()
+{
+	mScene->addRect(60, 30, 30, 30, QPen(), QBrush(QColor(Qt::blue)));
+}
+
 QSize
 Game::getMapSize() const
 {
@@ -62,13 +69,13 @@ Game::getMapSize() const
 }
 
 void
-Game::moveLeft()
+Game::keyLeftReciever()
 {
 	qDebug() << "Left";
 }
 
 void
-Game::moveRight()
+Game::keyRightReciever()
 {
 	qDebug() << "Right";
 }
