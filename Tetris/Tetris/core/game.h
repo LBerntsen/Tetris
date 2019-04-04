@@ -18,6 +18,8 @@ public:
 	GameScene *getScene();
 	QSize getMapSize() const;
 	int getTileSize() const;
+	int getNumRows() const;
+	int getNumCols() const;
 	void makeGrid(int aTileSize, int aRow, int aCols);
 	void gameStart();
 

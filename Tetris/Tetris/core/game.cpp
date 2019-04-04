@@ -12,7 +12,7 @@
 Game::Game()
 {
 	mScene = new GameScene;
-	makeGrid(getTileSize(), 22, 12);
+	makeGrid(getTileSize(), getNumRows(), getNumCols());
 
 	connect(mScene, SIGNAL(sigKeyLeftPressed()), this, SLOT(keyLeftReciever()));
 	connect(mScene, SIGNAL(sigKeyRightPressed()), this, SLOT(keyRightReciever()));
@@ -73,6 +73,18 @@ int
 Game::getTileSize() const
 {
 	return 30;
+}
+
+int
+Game::getNumRows() const
+{
+	return 22;
+}
+
+int
+Game::getNumCols() const
+{
+	return 12;
 }
 
 void
