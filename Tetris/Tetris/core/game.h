@@ -29,8 +29,8 @@ private:
 	QGraphicsItem *mBlock;
 
 private slots:
-	void keyLeftReciever();
-	void keyRightReciever();
+	int keyLeftReciever();
+	int keyRightReciever();
 
 };
 

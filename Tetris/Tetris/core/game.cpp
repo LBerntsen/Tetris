@@ -60,7 +60,9 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 void
 Game::gameStart()
 {
-	mBlock = mScene->addRect(60, 30, 30, 30, QPen(), QBrush(QColor(Qt::blue)));
+	mBlock = mScene->addRect(0, 0, 30, 30, QPen(), QBrush(QColor(Qt::blue)));
+	mBlock->setX(getTileSize() * 7);
+	mBlock->setY(getTileSize());
 }
 
 QSize
@@ -87,26 +89,30 @@ Game::getNumCols() const
 	return 12;
 }
 
-void
+int
 Game::keyLeftReciever()
 {
 	QPointF blockPos = mBlock->pos();
 	int posX = 0;
 
+	if (blockPos.x() == getTileSize())
+		return 0;
+
 	posX = blockPos.x() - getTileSize();
 	blockPos.setX(posX);
-	qDebug() << "Left";
 	mBlock->setPos(blockPos);
 }
 
-void
+int
 Game::keyRightReciever()
 {
 	QPointF blockPos = mBlock->pos();
 	int posX = 0;
 
+	if (blockPos.x() == getTileSize() * (getNumCols() - 2))
+		return 0;
+
 	posX = blockPos.x() + getTileSize();
 	blockPos.setX(posX);
-	qDebug() << "Right";
 	mBlock->setPos(blockPos);
 }
