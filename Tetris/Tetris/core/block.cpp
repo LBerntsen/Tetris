@@ -24,6 +24,7 @@ Block::start(GameScene *aScene)
 	mBlock = aScene->addRect(0, 0, tileSize, tileSize, QPen(), QBrush(QColor(randomColor())));
 	mBlock->setX(tileSize * 5);
 	mBlock->setY(tileSize);
+	mBlock->setZValue(1);
 }
 
 QColor
