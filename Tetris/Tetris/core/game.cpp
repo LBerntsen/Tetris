@@ -8,6 +8,7 @@
 #include <QGraphicsRectItem>
 #include <QBrush>
 #include <QPointF>
+#include <QList>
 
 Game::Game()
 {
@@ -39,8 +40,10 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 
 	int x = 0;
 	int y = 0;
+
 	for (int row = 0; row < aRows; row++)
 	{
+		QList<QGraphicsRectItem *> *itemList = new QList<QGraphicsRectItem *>;
 		for (int col = 0; col < aCols; col++)
 		{
 			if ((col == 0) || (col == aCols - 1) || (row == 0) || (row == aRows - 1))
@@ -48,9 +51,11 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 			else {
 				tileColor = Qt::white;
 			}
-			mScene->addRect(x, y, aTileSize, aTileSize, QPen(), QBrush(QColor(tileColor)));
+			QGraphicsRectItem *mCol = mScene->addRect(x, y, aTileSize, aTileSize, QPen(), QBrush(QColor(tileColor)));
+			itemList->append(mCol);
 			x = x + aTileSize;
 		}
+		mRowList.append(itemList);
 		y = y + aTileSize;
 		x = 0;
 	}

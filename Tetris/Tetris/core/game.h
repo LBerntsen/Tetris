@@ -25,9 +25,11 @@ public:
 	void gameStart();
 
 private:
+	
 	GameScene *mScene;
 	QSize mSize;
 	Block *mBlock;
+	QList<QList<QGraphicsRectItem *> *> mRowList;
 
 };
 
