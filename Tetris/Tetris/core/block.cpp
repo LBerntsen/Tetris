@@ -28,11 +28,17 @@ Block::start()
 	mBlock->setY(mTileSize);
 	mBlock->setZValue(1);
 
-	QGraphicsItem *block1;
-	block1 = mScene->addRect(mTileSize, 60, mTileSize * 10, mTileSize);
-	block1->setZValue(1);
+	mScene->addRect(mTileSize, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
+	mScene->addRect(mTileSize * 2, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
+	mScene->addRect(mTileSize * 3, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
+	mScene->addRect(mTileSize * 4, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
+	mScene->addRect(mTileSize * 5, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
+	mScene->addRect(mTileSize * 6, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
+	mScene->addRect(mTileSize * 7, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
+	mScene->addRect(mTileSize * 8, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
+	mScene->addRect(mTileSize * 9, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
+	mScene->addRect(mTileSize * 10, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
 
-	
 }
 
 QColor
@@ -42,9 +48,7 @@ Block::randomColor()
 	
 	QColor color;
 	int random;
-	random = qrand() % 5;
-
-	qDebug() << random;
+	random = qrand() % 5 + 1;
 
 	switch (random)
 	{

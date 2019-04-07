@@ -43,7 +43,7 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 
 	for (int row = 0; row < aRows; row++)
 	{
-		QList<QGraphicsRectItem *> *colList = new QList<QGraphicsRectItem *>;
+		QList<QGraphicsItem *> *colList = new QList<QGraphicsItem *>;
 		for (int col = 0; col < aCols; col++)
 		{
 			if ((col == 0) || (col == aCols - 1) || (row == 0) || (row == aRows - 1))
@@ -51,9 +51,13 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 			else {
 				tileColor = Qt::white;
 			}
-			QGraphicsRectItem *mCol = new QGraphicsRectItem;
-			mCol = mScene->addRect(x, y, aTileSize, aTileSize, QPen(), QBrush(QColor(tileColor)));
-			colList->append(mCol);
+			QGraphicsRectItem *mTile = new QGraphicsRectItem;
+			mTile = mScene->addRect(x, y, aTileSize, aTileSize, QPen(), QBrush(QColor(tileColor)));
+			mTile->setZValue(-1);
+			if (col != 0 || col != aCols - 1)
+			{
+				colList->append(mTile);
+			}
 			x = x + aTileSize;
 		}
 		mRowList.append(colList);
@@ -68,6 +72,11 @@ void
 Game::gameStart()
 {
 	mBlock->start();
+	qDebug() << mRowList.at(1)->at(5)->isObscured();
+	for(int c = 0; c < mRowList.at(2)->size(); c++)
+	{
+		qDebug() << mRowList.at(2)->at(c)->isObscured();
+	}
 }
 
 QSize

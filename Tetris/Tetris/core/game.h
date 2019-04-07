@@ -5,6 +5,7 @@
 #include <QString>
 #include <QSize>
 #include <QGraphicsItem>
+#include <QGraphicsItemGroup>
 
 class Block;
 class GameScene;
@@ -28,7 +29,7 @@ private:
 	GameScene *mScene;
 	QSize mSize;
 	Block *mBlock;
-	QList<QList<QGraphicsRectItem *> *> mRowList;
+	QList<QList<QGraphicsItem *> *> mRowList;
 
 };
 
