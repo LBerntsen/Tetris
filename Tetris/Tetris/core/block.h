@@ -11,15 +11,16 @@ class Block : public QObject
 {
 	Q_OBJECT
 public:
-	Block(int aTileSize, int aNumCols);
+	Block(int aTileSize, int aNumCols, GameScene *aScene);
 	virtual ~Block();
-	void start(GameScene *aScene);
+	void start();
 
 private:
 	QColor randomColor();
 	QGraphicsItem *mBlock;
-	int tileSize;
-	int numCols;
+	int mTileSize;
+	int mNumCols;
+	GameScene *mScene;
 
 public slots:
 	int keyLeftReciever();

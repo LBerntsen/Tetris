@@ -13,7 +13,7 @@
 Game::Game()
 {
 	mScene = new GameScene;
-	mBlock = new Block(getTileSize(), getNumCols());
+	mBlock = new Block(getTileSize(), getNumCols(), mScene);
 	makeGrid(getTileSize(), getNumRows(), getNumCols());
 
 	connect(mScene, SIGNAL(sigKeyLeftPressed()), mBlock, SLOT(keyLeftReciever()));
@@ -43,7 +43,7 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 
 	for (int row = 0; row < aRows; row++)
 	{
-		QList<QGraphicsRectItem *> *itemList = new QList<QGraphicsRectItem *>;
+		QList<QGraphicsRectItem *> *colList = new QList<QGraphicsRectItem *>;
 		for (int col = 0; col < aCols; col++)
 		{
 			if ((col == 0) || (col == aCols - 1) || (row == 0) || (row == aRows - 1))
@@ -51,11 +51,12 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 			else {
 				tileColor = Qt::white;
 			}
-			QGraphicsRectItem *mCol = mScene->addRect(x, y, aTileSize, aTileSize, QPen(), QBrush(QColor(tileColor)));
-			itemList->append(mCol);
+			QGraphicsRectItem *mCol = new QGraphicsRectItem;
+			mCol = mScene->addRect(x, y, aTileSize, aTileSize, QPen(), QBrush(QColor(tileColor)));
+			colList->append(mCol);
 			x = x + aTileSize;
 		}
-		mRowList.append(itemList);
+		mRowList.append(colList);
 		y = y + aTileSize;
 		x = 0;
 	}
@@ -66,7 +67,7 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 void
 Game::gameStart()
 {
-	mBlock->start(mScene);
+	mBlock->start();
 }
 
 QSize

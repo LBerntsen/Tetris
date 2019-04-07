@@ -7,10 +7,12 @@
 
 #include <QDebug>
 
-Block::Block(int aTileSize, int aNumCols)
+Block::Block(int aTileSize, int aNumCols, GameScene *aScene)
 {
-	tileSize = aTileSize;
-	numCols = aNumCols;
+	mTileSize = aTileSize;
+	mNumCols = aNumCols;
+	mScene = aScene;
+
 }
 
 Block::~Block()
@@ -19,12 +21,18 @@ Block::~Block()
 }
 
 void
-Block::start(GameScene *aScene)
+Block::start()
 {
-	mBlock = aScene->addRect(0, 0, tileSize, tileSize, QPen(), QBrush(QColor(randomColor())));
-	mBlock->setX(tileSize * 5);
-	mBlock->setY(tileSize);
+	mBlock = mScene->addRect(0, 0, mTileSize, mTileSize, QPen(), QBrush(QColor(randomColor())));
+	mBlock->setX(mTileSize * 5);
+	mBlock->setY(mTileSize);
 	mBlock->setZValue(1);
+
+	QGraphicsItem *block1;
+	block1 = mScene->addRect(mTileSize, 60, mTileSize * 10, mTileSize);
+	block1->setZValue(1);
+
+	
 }
 
 QColor
@@ -66,10 +74,10 @@ Block::keyLeftReciever()
 	QPointF blockPos = mBlock->pos();
 	int posX = 0;
 
-	if (blockPos.x() == tileSize)
+	if (blockPos.x() == mTileSize)
 		return 0;
 
-	posX = blockPos.x() - tileSize;
+	posX = blockPos.x() - mTileSize;
 	blockPos.setX(posX);
 	mBlock->setPos(blockPos);
 }
@@ -80,10 +88,10 @@ Block::keyRightReciever()
 	QPointF blockPos = mBlock->pos();
 	int posX = 0;
 
-	if (blockPos.x() == tileSize * (numCols - 2))
+	if (blockPos.x() == mTileSize * (mNumCols - 2))
 		return 0;
 
-	posX = blockPos.x() + tileSize;
+	posX = blockPos.x() + mTileSize;
 	blockPos.setX(posX);
 	mBlock->setPos(blockPos);
 }
