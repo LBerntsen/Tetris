@@ -11,8 +11,6 @@ class QGraphicsTextItem;
 class MainWindow;
 class Game;
 
-enum TileType { eInvalid = -1, eGreen, eGray };
-
 /** Singleton MountainDew Valley; application class.
 */
 class App : public QObject

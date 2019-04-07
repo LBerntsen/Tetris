@@ -51,11 +51,9 @@
     <QtMoc Include="core\game.h">
       <Filter>Core</Filter>
     </QtMoc>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="core\block.h">
+    <QtMoc Include="core\block.h">
       <Filter>Core</Filter>
-    </ClInclude>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="gui\mainwindow.ui">

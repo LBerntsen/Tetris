@@ -6,6 +6,7 @@
 #include <QSize>
 #include <QGraphicsItem>
 
+class Block;
 class GameScene;
 
 class Game : public QObject
@@ -26,11 +27,7 @@ public:
 private:
 	GameScene *mScene;
 	QSize mSize;
-	QGraphicsItem *mBlock;
-
-private slots:
-	int keyLeftReciever();
-	int keyRightReciever();
+	Block *mBlock;
 
 };
 

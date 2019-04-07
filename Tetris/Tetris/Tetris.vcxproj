@@ -126,7 +126,7 @@
     <QtMoc Include="core\app.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core\block.h" />
+    <QtMoc Include="core\block.h" />
     <QtMoc Include="core\game.h" />
     <QtMoc Include="core\gameScene.h" />
     <QtMoc Include="gui\mainwindow.h" />

@@ -12,10 +12,11 @@
 Game::Game()
 {
 	mScene = new GameScene;
+	mBlock = new Block(getTileSize(), getNumCols());
 	makeGrid(getTileSize(), getNumRows(), getNumCols());
 
-	connect(mScene, SIGNAL(sigKeyLeftPressed()), this, SLOT(keyLeftReciever()));
-	connect(mScene, SIGNAL(sigKeyRightPressed()), this, SLOT(keyRightReciever()));
+	connect(mScene, SIGNAL(sigKeyLeftPressed()), mBlock, SLOT(keyLeftReciever()));
+	connect(mScene, SIGNAL(sigKeyRightPressed()), mBlock, SLOT(keyRightReciever()));
 }
 
 
@@ -60,9 +61,7 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 void
 Game::gameStart()
 {
-	mBlock = mScene->addRect(0, 0, 30, 30, QPen(), QBrush(QColor(Qt::blue)));
-	mBlock->setX(getTileSize() * 7);
-	mBlock->setY(getTileSize());
+	mBlock->start(mScene);
 }
 
 QSize
@@ -87,32 +86,4 @@ int
 Game::getNumCols() const
 {
 	return 12;
-}
-
-int
-Game::keyLeftReciever()
-{
-	QPointF blockPos = mBlock->pos();
-	int posX = 0;
-
-	if (blockPos.x() == getTileSize())
-		return 0;
-
-	posX = blockPos.x() - getTileSize();
-	blockPos.setX(posX);
-	mBlock->setPos(blockPos);
-}
-
-int
-Game::keyRightReciever()
-{
-	QPointF blockPos = mBlock->pos();
-	int posX = 0;
-
-	if (blockPos.x() == getTileSize() * (getNumCols() - 2))
-		return 0;
-
-	posX = blockPos.x() + getTileSize();
-	blockPos.setX(posX);
-	mBlock->setPos(blockPos);
 }
