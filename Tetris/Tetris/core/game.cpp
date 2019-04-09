@@ -18,6 +18,7 @@ Game::Game()
 
 	connect(mScene, SIGNAL(sigKeyLeftPressed()), mBlock, SLOT(keyLeftReciever()));
 	connect(mScene, SIGNAL(sigKeyRightPressed()), mBlock, SLOT(keyRightReciever()));
+	connect(mScene, SIGNAL(sigKeyTestPressed()), this, SLOT(keyTestReciever()));
 }
 
 
@@ -72,7 +73,6 @@ void
 Game::gameStart()
 {
 	mBlock->start();
-	qDebug() << mRowList.at(1)->at(5)->isObscured();
 	for(int c = 0; c < mRowList.at(2)->size(); c++)
 	{
 		qDebug() << mRowList.at(2)->at(c)->isObscured();
@@ -101,4 +101,11 @@ int
 Game::getNumCols() const
 {
 	return 12;
+}
+
+int
+Game::keyTestReciever()
+{
+	qDebug() << "Test button pressed!";
+	return 0;
 }

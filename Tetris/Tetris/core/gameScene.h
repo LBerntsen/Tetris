@@ -13,6 +13,7 @@ public:
 signals:
 	void sigKeyLeftPressed();
 	void sigKeyRightPressed();
+	void sigKeyTestPressed();
 
 private:
 	void keyPressEvent(QKeyEvent *event);

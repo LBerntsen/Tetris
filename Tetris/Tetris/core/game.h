@@ -31,6 +31,8 @@ private:
 	Block *mBlock;
 	QList<QList<QGraphicsItem *> *> mRowList;
 
+public slots:
+	int keyTestReciever();
 };
 
 #endif

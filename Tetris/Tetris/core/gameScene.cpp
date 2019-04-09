@@ -22,9 +22,13 @@ GameScene::keyPressEvent(QKeyEvent *event)
 	if (Qt::Key_Left == event->key())
 	{
 		emit sigKeyLeftPressed();
-	}
-	else if (Qt::Key_Right== event->key())
+	} 
+	else if (Qt::Key_Right == event->key())
 	{
 		emit sigKeyRightPressed();
+	}
+	else if (Qt::Key_Space == event->key()) //Spacebar for testing må fjernes når spillet er ferdig
+	{
+		emit sigKeyTestPressed();
 	}
 }
