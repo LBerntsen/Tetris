@@ -23,21 +23,19 @@ Block::~Block()
 void
 Block::start()
 {
-	mBlock = mScene->addRect(0, 0, mTileSize, mTileSize, QPen(), QBrush(QColor(randomColor())));
-	mBlock->setX(mTileSize * 5);
-	mBlock->setY(mTileSize);
-	mBlock->setZValue(1);
+//mBlock = mScene->addRect(0, 0, mTileSize, mTileSize, QPen(), QBrush(QColor(randomColor())));
+//mBlock->setX(mTileSize * 5);
+//mBlock->setY(mTileSize);
+//mBlock->setZValue(1);
 
-	mScene->addRect(mTileSize, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
-	mScene->addRect(mTileSize * 2, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
-	mScene->addRect(mTileSize * 3, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
-	mScene->addRect(mTileSize * 4, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
-	mScene->addRect(mTileSize * 5, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
-	mScene->addRect(mTileSize * 6, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
-	mScene->addRect(mTileSize * 7, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
-	mScene->addRect(mTileSize * 8, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
-	mScene->addRect(mTileSize * 9, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
-	mScene->addRect(mTileSize * 10, 60, mTileSize, mTileSize, QPen(), QBrush(QColor(Qt::cyan)));
+	
+	for (int i = 1; i < 11; i++)
+	{
+		for (int c = 1; c < 21; c = c++)
+		{
+			mScene->addRect(mTileSize * i, mTileSize * c, mTileSize, mTileSize, QPen(), QBrush(randomColor()));
+		}
+	}
 
 }
 
@@ -84,6 +82,7 @@ Block::keyLeftReciever()
 	posX = blockPos.x() - mTileSize;
 	blockPos.setX(posX);
 	mBlock->setPos(blockPos);
+	return 0;
 }
 
 int
@@ -98,4 +97,5 @@ Block::keyRightReciever()
 	posX = blockPos.x() + mTileSize;
 	blockPos.setX(posX);
 	mBlock->setPos(blockPos);
+	return 0;
 }

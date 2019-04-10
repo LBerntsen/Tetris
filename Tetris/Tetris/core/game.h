@@ -24,6 +24,7 @@ public:
 	int getNumCols() const;
 	void makeGrid(int aTileSize, int aRow, int aCols);
 	void gameStart();
+	bool checkRows();
 
 private:
 	GameScene *mScene;

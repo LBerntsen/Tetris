@@ -73,9 +73,31 @@ void
 Game::gameStart()
 {
 	mBlock->start();
-	for(int c = 0; c < mRowList.at(2)->size(); c++)
+}
+
+bool
+Game::checkRows()
+{
+	bool obscured = true;
+	int obscuredNumber = 0;
+
+	for (int i = getNumRows() - 2; i > 1; i--)
 	{
-		qDebug() << mRowList.at(2)->at(c)->isObscured();
+		obscuredNumber = 0;
+		for (int c = 1; c < getNumCols() - 1; c++)
+		{
+			obscured = mRowList.at(i)->at(c)->isObscured();
+			obscuredNumber++;
+			if (obscured == false)
+				obscuredNumber = 0;
+			else
+				qDebug() << "Obscured   " << "Row: " << i << "Col: " << c;
+		}
+		if (obscuredNumber == getNumCols() - 2)
+		{
+			qDebug() << "Remove row: " << i;
+			return true; //Remove row
+		}
 	}
 }
 
@@ -107,5 +129,6 @@ int
 Game::keyTestReciever()
 {
 	qDebug() << "Test button pressed!";
+	checkRows();
 	return 0;
 }
