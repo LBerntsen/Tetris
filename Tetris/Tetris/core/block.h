@@ -25,6 +25,7 @@ private:
 	int mNumRows;
 	GameScene *mScene;
 	QList<QList<QGraphicsItem *> *> mGridRowList;
+	QList<QList<QGraphicsItem *> *> mBlockRowList;
 
 public slots:
 	int keyLeftReciever();

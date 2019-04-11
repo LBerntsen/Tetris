@@ -25,19 +25,10 @@ Block::~Block()
 void
 Block::start()
 {
-//mBlock = mScene->addRect(0, 0, mTileSize, mTileSize, QPen(), QBrush(QColor(randomColor())));
-//mBlock->setX(mTileSize * 5);
-//mBlock->setY(mTileSize);
-//mBlock->setZValue(1);
-
-	
-	for (int i = 1; i < 11; i++)
-	{
-		for (int c = 1; c < 21; c = c++)
-		{
-			mScene->addRect(mTileSize * i, mTileSize * c, mTileSize, mTileSize, QPen(), QBrush(randomColor()));
-		}
-	}
+	mBlock = mScene->addRect(0, 0, mTileSize, mTileSize, QPen(), QBrush(QColor(randomColor())));
+	mBlock->setX(mTileSize * 5);
+	mBlock->setY(mTileSize);
+	mBlock->setZValue(1);
 
 }
 
