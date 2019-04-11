@@ -13,7 +13,7 @@
 Game::Game()
 {
 	mScene = new GameScene;
-	mBlock = new Block(getTileSize(), getNumCols(), mScene);
+	mBlock = new Block(getTileSize(), getNumCols(), getNumRows(), mScene, mGridRowList);
 	makeGrid(getTileSize(), getNumRows(), getNumCols());
 
 	connect(mScene, SIGNAL(sigKeyLeftPressed()), mBlock, SLOT(keyLeftReciever()));
@@ -61,7 +61,7 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 			}
 			x = x + aTileSize;
 		}
-		mRowList.append(colList);
+		mGridRowList.append(colList);
 		y = y + aTileSize;
 		x = 0;
 	}
@@ -73,32 +73,6 @@ void
 Game::gameStart()
 {
 	mBlock->start();
-}
-
-bool
-Game::checkRows()
-{
-	bool obscured = true;
-	int obscuredNumber = 0;
-
-	for (int i = getNumRows() - 2; i > 1; i--)
-	{
-		obscuredNumber = 0;
-		for (int c = 1; c < getNumCols() - 1; c++)
-		{
-			obscured = mRowList.at(i)->at(c)->isObscured();
-			obscuredNumber++;
-			if (obscured == false)
-				obscuredNumber = 0;
-			else
-				qDebug() << "Obscured   " << "Row: " << i << "Col: " << c;
-		}
-		if (obscuredNumber == getNumCols() - 2)
-		{
-			qDebug() << "Remove row: " << i;
-			return true; //Remove row
-		}
-	}
 }
 
 QSize
@@ -129,6 +103,6 @@ int
 Game::keyTestReciever()
 {
 	qDebug() << "Test button pressed!";
-	checkRows();
+	mBlock->checkRows();
 	return 0;
 }

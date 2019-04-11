@@ -7,11 +7,13 @@
 
 #include <QDebug>
 
-Block::Block(int aTileSize, int aNumCols, GameScene *aScene)
+Block::Block(int aTileSize, int aNumCols, int aNumRows, GameScene *aScene, QList<QList<QGraphicsItem *> *> aGridRowList)
 {
 	mTileSize = aTileSize;
 	mNumCols = aNumCols;
+	mNumRows = aNumRows;
 	mScene = aScene;
+	mGridRowList = aGridRowList;
 
 }
 
@@ -37,6 +39,40 @@ Block::start()
 		}
 	}
 
+}
+
+void
+Block::removeRow(int aRow)
+{
+	qDebug() << "Removed row " << aRow;
+}
+
+void
+Block::checkRows()
+{
+	bool obscured = true;
+	int obscuredNumber = 0;
+	int rowNumber = 0;
+
+	for (int i = mNumRows - 2; i > 1; i--)
+	{
+		obscuredNumber = 0;
+		rowNumber = i;
+		for (int c = 1; c < mNumCols - 1; c++)
+		{
+			obscured = mGridRowList.at(i)->at(c)->isObscured();
+			obscuredNumber++;
+			if (obscured == false)
+				obscuredNumber = 0;
+			else
+				qDebug() << "Obscured   " << "Row: " << i << "Col: " << c;
+		}
+		if (obscuredNumber == mNumCols - 2)
+		{
+			qDebug() << "Remove row: " << i;
+			removeRow(rowNumber);
+		}
+	}
 }
 
 QColor

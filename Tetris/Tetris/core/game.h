@@ -24,13 +24,12 @@ public:
 	int getNumCols() const;
 	void makeGrid(int aTileSize, int aRow, int aCols);
 	void gameStart();
-	bool checkRows();
 
 private:
 	GameScene *mScene;
 	QSize mSize;
 	Block *mBlock;
-	QList<QList<QGraphicsItem *> *> mRowList;
+	QList<QList<QGraphicsItem *> *> mGridRowList;
 
 public slots:
 	int keyTestReciever();
