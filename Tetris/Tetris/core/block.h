@@ -15,7 +15,7 @@ public:
 	virtual ~Block();
 	void start();
 	void removeRow(int aRow);
-	void checkRows();
+	int checkRows();
 
 private:
 	QColor randomColor();

@@ -47,7 +47,7 @@ Block::removeRow(int aRow)
 	qDebug() << "Removed row " << aRow;
 }
 
-void
+int
 Block::checkRows()
 {
 	bool obscured = true;
@@ -71,6 +71,7 @@ Block::checkRows()
 		{
 			qDebug() << "Remove row: " << i;
 			removeRow(rowNumber);
+			return 0;
 		}
 	}
 }

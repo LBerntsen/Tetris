@@ -13,8 +13,8 @@
 Game::Game()
 {
 	mScene = new GameScene;
-	mBlock = new Block(getTileSize(), getNumCols(), getNumRows(), mScene, mGridRowList);
 	makeGrid(getTileSize(), getNumRows(), getNumCols());
+	mBlock = new Block(getTileSize(), getNumCols(), getNumRows(), mScene, mGridRowList);
 
 	connect(mScene, SIGNAL(sigKeyLeftPressed()), mBlock, SLOT(keyLeftReciever()));
 	connect(mScene, SIGNAL(sigKeyRightPressed()), mBlock, SLOT(keyRightReciever()));
