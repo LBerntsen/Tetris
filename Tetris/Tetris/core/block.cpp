@@ -15,6 +15,8 @@ Block::Block(int aTileSize, int aNumCols, int aNumRows, GameScene *aScene, QList
 	mScene = aScene;
 	mGridRowList = aGridRowList;
 
+	mTimer = new QTimer(this);
+	connect(mTimer, SIGNAL(timeout()), this, SLOT(moveBlockDown()));
 }
 
 Block::~Block()
@@ -65,6 +67,12 @@ Block::checkRows()
 			return 0;
 		}
 	}
+}
+
+void
+Block::startMoveDownTimer(int aSeconds)
+{
+	mTimer->start(aSeconds);
 }
 
 QColor
@@ -126,4 +134,14 @@ Block::keyRightReciever()
 	blockPos.setX(posX);
 	mBlock->setPos(blockPos);
 	return 0;
+}
+
+int
+Block::moveBlockDown()
+{
+	int y = mBlock->y();
+	if (y == (mNumRows * mTileSize) + mTileSize)
+		return 0;
+
+	mBlock->setY(y + mTileSize);
 }

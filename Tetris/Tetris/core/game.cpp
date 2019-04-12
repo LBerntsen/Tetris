@@ -13,6 +13,7 @@
 Game::Game()
 {
 	mScene = new GameScene;
+	mMoveDownSeconds = 1000;
 	makeGrid(getTileSize(), getNumRows(), getNumCols());
 	mBlock = new Block(getTileSize(), getNumCols(), getNumRows(), mScene, mGridRowList);
 
@@ -73,6 +74,7 @@ void
 Game::gameStart()
 {
 	mBlock->start();
+	mBlock->startMoveDownTimer(mMoveDownSeconds);
 }
 
 QSize

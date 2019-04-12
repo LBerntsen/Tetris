@@ -30,9 +30,11 @@ private:
 	QSize mSize;
 	Block *mBlock;
 	QList<QList<QGraphicsItem *> *> mGridRowList;
+	int mMoveDownSeconds;
 
 public slots:
 	int keyTestReciever();
+
 };
 
 #endif
