@@ -13,9 +13,9 @@
 Game::Game()
 {
 	mScene = new GameScene;
-	mMoveDownSeconds = 1000;
+	mTimerInterval = 1000;
 	makeGrid(getTileSize(), getNumRows(), getNumCols());
-	mBlock = new Block(getTileSize(), getNumCols(), getNumRows(), mScene, mGridRowList);
+	mBlock = new Block(getTileSize(), getNumCols(), getNumRows(), mTimerInterval, mScene, mGridRowList);
 
 	connect(mScene, SIGNAL(sigKeyLeftPressed()), mBlock, SLOT(keyLeftReciever()));
 	connect(mScene, SIGNAL(sigKeyRightPressed()), mBlock, SLOT(keyRightReciever()));
@@ -74,7 +74,6 @@ void
 Game::gameStart()
 {
 	mBlock->start();
-	mBlock->startMoveDownTimer(mMoveDownSeconds);
 }
 
 QSize

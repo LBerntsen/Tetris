@@ -7,13 +7,14 @@
 
 #include <QDebug>
 
-Block::Block(int aTileSize, int aNumCols, int aNumRows, GameScene *aScene, QList<QList<QGraphicsItem *> *> aGridRowList)
+Block::Block(int aTileSize, int aNumCols, int aNumRows, int aTimerInterval, GameScene *aScene, QList<QList<QGraphicsItem *> *> aGridRowList)
 {
 	mTileSize = aTileSize;
 	mNumCols = aNumCols;
 	mNumRows = aNumRows;
 	mScene = aScene;
 	mGridRowList = aGridRowList;
+	mTimerInterval = aTimerInterval;
 
 	mTimer = new QTimer(this);
 	connect(mTimer, SIGNAL(timeout()), this, SLOT(moveBlockDown()));
@@ -27,11 +28,7 @@ Block::~Block()
 void
 Block::start()
 {
-	mBlock = mScene->addRect(0, 0, mTileSize, mTileSize, QPen(), QBrush(QColor(randomColor())));
-	mBlock->setX(mTileSize * 5);
-	mBlock->setY(mTileSize);
-	mBlock->setZValue(1);
-
+	newBlock();
 }
 
 void
@@ -70,9 +67,14 @@ Block::checkRows()
 }
 
 void
-Block::startMoveDownTimer(int aSeconds)
+Block::newBlock()
 {
-	mTimer->start(aSeconds);
+	mBlock = mScene->addRect(0, 0, mTileSize, mTileSize, QPen(), QBrush(QColor(randomColor())));
+	mBlock->setX(mTileSize * 5);
+	mBlock->setY(mTileSize);
+	mBlock->setZValue(1);
+
+	mTimer->start(mTimerInterval);
 }
 
 QColor
@@ -140,8 +142,11 @@ int
 Block::moveBlockDown()
 {
 	int y = mBlock->y();
-	if (y == (mNumRows * mTileSize) + mTileSize)
+	if (y == (mNumRows - 2) * mTileSize)
+	{
+		mTimer->stop();
 		return 0;
+	}
 
 	mBlock->setY(y + mTileSize);
 }

@@ -30,7 +30,7 @@ private:
 	QSize mSize;
 	Block *mBlock;
 	QList<QList<QGraphicsItem *> *> mGridRowList;
-	int mMoveDownSeconds;
+	int mTimerInterval;
 
 public slots:
 	int keyTestReciever();

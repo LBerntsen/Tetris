@@ -12,14 +12,14 @@ class Block : public QObject
 {
 	Q_OBJECT
 public:
-	Block(int aTileSize, int aNumCols, int aNumRows, GameScene *aScene, QList<QList<QGraphicsItem *> *> aGridRowList);
+	Block(int aTileSize, int aNumCols, int aNumRows, int aTimerInterval, GameScene *aScene, QList<QList<QGraphicsItem *> *> aGridRowList);
 	virtual ~Block();
 	void start();
 	void removeRow(int aRow);
 	int checkRows();
-	void startMoveDownTimer(int aSeconds);
 
 private:
+	void newBlock();
 	QTimer* mTimer;
 	QColor randomColor();
 	QGraphicsItem *mBlock;
@@ -29,6 +29,7 @@ private:
 	int mTileSize;
 	int mNumCols;
 	int mNumRows;
+	int mTimerInterval;
 
 public slots:
 	int keyLeftReciever();
