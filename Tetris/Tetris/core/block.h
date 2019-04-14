@@ -18,7 +18,7 @@ public:
 	void start();
 	void removeRow(int aRow);
 	int checkRows();
-	void resetBlockRowList(int aNumRows, int aNumCols);
+	void makeBlockRowList(int aNumRows, int aNumCols);
 
 private:
 	void newBlock();

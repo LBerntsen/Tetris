@@ -28,7 +28,7 @@ Block::~Block()
 void
 Block::start()
 {
-	resetBlockRowList(mNumRows, mNumCols);
+	makeBlockRowList(mNumRows, mNumCols);
 	newBlock();
 }
 
@@ -36,6 +36,17 @@ void
 Block::removeRow(int aRow)
 {
 	qDebug() << "Removed row " << aRow;
+
+	//Remove row
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	mBlockRowList.at(aRow)->clear();
+	newBlock();
 }
 
 int
@@ -55,34 +66,24 @@ Block::checkRows()
 			obscuredNumber++;
 			if (obscured == false)
 				obscuredNumber = 0;
-			else
-				qDebug() << "Obscured   " << "Row: " << i << "Col: " << c;
 		}
+	}
 		if (obscuredNumber == mNumCols - 2)
 		{
-			qDebug() << "Remove row: " << i;
+			qDebug() << "Remove row: " << rowNumber;
 			removeRow(rowNumber);
 			return 0;
 		}
-	}
+		else
+		{
+			newBlock();
+		}
 }
 
 void
-Block::resetBlockRowList(int aNumRows, int aNumCols)
+Block::makeBlockRowList(int aNumRows, int aNumCols)
 {
 	QList<QGraphicsItem*>* colList = new QList<QGraphicsItem*>;
-
-	/*
-	//Sett mBlockRowList til null og reset
-
-	for (int row = 0; row < aNumRows; row++)
-	{
-		for (int col = 0; col < aNumCols; col++)
-		{
-			
-		}
-	}
-	*/
 
 	for (int row = 0; row < aNumRows; row++)
 	{
@@ -190,13 +191,19 @@ Block::moveBlockDown()
 	if (y == (mNumRows - 2) * mTileSize)
 	{
 		mTimer->stop();
-		newBlock();
+		checkRows();
 		return 0;
 	}
 	else if (mGridRowList.at(blockUnderY)->at(x)->isObscured())
 	{
 		mTimer->stop();
-		newBlock();
+		y = mBlock->y();
+		y = (y + 1) / mTileSize;
+		x = mBlock->x();
+		x = (x + 1) / mTileSize;
+
+		mBlockRowList.at(y)->replace(x, mBlock);
+		checkRows();
 		return 0;
 	}
 
