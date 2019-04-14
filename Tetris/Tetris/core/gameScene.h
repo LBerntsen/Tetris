@@ -13,6 +13,7 @@ public:
 signals:
 	void sigKeyLeftPressed();
 	void sigKeyRightPressed();
+	void sigKeyDownPressed();
 	void sigKeyTestPressed();
 
 private:

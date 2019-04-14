@@ -70,15 +70,25 @@ Block::checkRows()
 void
 Block::resetBlockRowList(int aNumRows, int aNumCols)
 {
+	QList<QGraphicsItem*>* colList = new QList<QGraphicsItem*>;
+
+	/*
 	//Sett mBlockRowList til null og reset
 
 	for (int row = 0; row < aNumRows; row++)
 	{
-		QList<QGraphicsItem*>* colList = new QList<QGraphicsItem*>;
+		for (int col = 0; col < aNumCols; col++)
+		{
+			
+		}
+	}
+	*/
+
+	for (int row = 0; row < aNumRows; row++)
+	{
 		for (int col = 0; col < aNumCols; col++)
 		{
 			QGraphicsRectItem* mTile = new QGraphicsRectItem;
-			mTile = NULL;
 
 			if (col != 0 || col != aNumCols - 1)
 			{
@@ -161,11 +171,29 @@ Block::keyRightReciever()
 	return 0;
 }
 
+void
+Block::keyDownReciever()
+{
+	moveBlockDown();
+}
+
 int
 Block::moveBlockDown()
 {
 	int y = mBlock->y();
+	int x = mBlock->x();
+	x = x / mTileSize;
+	int blockUnderY = (y + mTileSize) / mTileSize;
+
+	mGridRowList.at(1)->at(1)->isObscured();
+	mGridRowList.at(blockUnderY)->at(x)->isObscured();
 	if (y == (mNumRows - 2) * mTileSize)
+	{
+		mTimer->stop();
+		newBlock();
+		return 0;
+	}
+	else if (mGridRowList.at(blockUnderY)->at(x)->isObscured())
 	{
 		mTimer->stop();
 		newBlock();

@@ -7,6 +7,7 @@
 #include <QGraphicsItem>
 #include <QColor>
 #include <QTimer>
+#include <QList>
 
 class Block : public QObject
 {
@@ -35,6 +36,7 @@ private:
 public slots:
 	int keyLeftReciever();
 	int keyRightReciever();
+	void keyDownReciever();
 	int moveBlockDown();
 
 };

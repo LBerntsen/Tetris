@@ -19,6 +19,7 @@ Game::Game()
 
 	connect(mScene, SIGNAL(sigKeyLeftPressed()), mBlock, SLOT(keyLeftReciever()));
 	connect(mScene, SIGNAL(sigKeyRightPressed()), mBlock, SLOT(keyRightReciever()));
+	connect(mScene, SIGNAL(sigKeyDownPressed()), mBlock, SLOT(keyDownReciever()));
 	connect(mScene, SIGNAL(sigKeyTestPressed()), this, SLOT(keyTestReciever()));
 }
 
