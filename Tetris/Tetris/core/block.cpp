@@ -36,7 +36,7 @@ void
 Block::removeRow(int aRow)
 {
 	qDebug() << "Removed row " << aRow;
-
+	 
 	//Remove row
 	//
 	//
@@ -45,7 +45,11 @@ Block::removeRow(int aRow)
 	//
 	//
 	//
-	mBlockRowList.at(aRow)->clear();
+	for (int i = 0; i < mNumCols; i++)
+	{
+		mBlockRowList.at(aRow)->at(i)->hide();
+	}
+	
 	newBlock();
 }
 
@@ -58,6 +62,9 @@ Block::checkRows()
 
 	for (int i = mNumRows - 2; i > 1; i--)
 	{
+		if (obscuredNumber == mNumCols - 2)
+			break;
+
 		obscuredNumber = 0;
 		rowNumber = i;
 		for (int c = 1; c < mNumCols - 1; c++)
@@ -68,6 +75,7 @@ Block::checkRows()
 				obscuredNumber = 0;
 		}
 	}
+	
 		if (obscuredNumber == mNumCols - 2)
 		{
 			qDebug() << "Remove row: " << rowNumber;
