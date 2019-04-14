@@ -32,6 +32,8 @@ private:
 	int mNumCols;
 	int mNumRows;
 	int mTimerInterval;
+	int getYListIndex();
+	int getXListIndex();
 
 public slots:
 	int keyLeftReciever();

@@ -143,12 +143,33 @@ Block::randomColor()
 }
 
 int
+Block::getYListIndex()
+{
+	int y = mBlock->y();
+	y = y / mTileSize;
+
+	return y;
+}
+
+int
+Block::getXListIndex()
+{
+	int x = mBlock->x();
+	x = x / mTileSize;
+	
+	return x;
+}
+
+int
 Block::keyLeftReciever()
 {
 	QPointF blockPos = mBlock->pos();
 	int posX = 0;
 
 	if (blockPos.x() == mTileSize)
+		return 0;
+	
+	if (mGridRowList.at(getYListIndex())->at(getXListIndex() - 1)->isObscured())
 		return 0;
 
 	posX = blockPos.x() - mTileSize;
@@ -164,6 +185,9 @@ Block::keyRightReciever()
 	int posX = 0;
 
 	if (blockPos.x() == mTileSize * (mNumCols - 2))
+		return 0;
+	
+	if (mGridRowList.at(getYListIndex())->at(getXListIndex() + 1)->isObscured())
 		return 0;
 
 	posX = blockPos.x() + mTileSize;
@@ -184,16 +208,13 @@ Block::moveBlockDown()
 	int y = mBlock->y();
 	int x = mBlock->x();
 
-	int xListIndex = x / mTileSize;
-	int yListIndex = y / mTileSize;
-
 	if (y == (mNumRows - 2) * mTileSize)
 	{
 		mTimer->stop();
 		checkRows();
 		return 0;
 	}
-	else if (mGridRowList.at(yListIndex + 1)->at(xListIndex)->isObscured())
+	else if (mGridRowList.at(getYListIndex() + 1)->at(getXListIndex())->isObscured())
 	{
 		mTimer->stop();
 		y = mBlock->y();
@@ -203,14 +224,6 @@ Block::moveBlockDown()
 
 		mBlockRowList.at(y)->replace(x, mBlock);
 		checkRows();
-		return 0;
-	}
-	else if (mGridRowList.at(yListIndex)->at(xListIndex - 1)->isObscured())
-	{
-		return 0;
-	}
-	else if (mGridRowList.at(yListIndex)->at(xListIndex + 1)->isObscured())
-	{
 		return 0;
 	}
 
