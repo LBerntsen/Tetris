@@ -183,27 +183,34 @@ Block::moveBlockDown()
 {
 	int y = mBlock->y();
 	int x = mBlock->x();
-	x = x / mTileSize;
-	int blockUnderY = (y + mTileSize) / mTileSize;
 
-	mGridRowList.at(1)->at(1)->isObscured();
-	mGridRowList.at(blockUnderY)->at(x)->isObscured();
+	int xListIndex = x / mTileSize;
+	int yListIndex = y / mTileSize;
+
 	if (y == (mNumRows - 2) * mTileSize)
 	{
 		mTimer->stop();
 		checkRows();
 		return 0;
 	}
-	else if (mGridRowList.at(blockUnderY)->at(x)->isObscured())
+	else if (mGridRowList.at(yListIndex + 1)->at(xListIndex)->isObscured())
 	{
 		mTimer->stop();
 		y = mBlock->y();
-		y = (y + 1) / mTileSize;
+		y = (y) / mTileSize;
 		x = mBlock->x();
-		x = (x + 1) / mTileSize;
+		x = (x) / mTileSize;
 
 		mBlockRowList.at(y)->replace(x, mBlock);
 		checkRows();
+		return 0;
+	}
+	else if (mGridRowList.at(yListIndex)->at(xListIndex - 1)->isObscured())
+	{
+		return 0;
+	}
+	else if (mGridRowList.at(yListIndex)->at(xListIndex + 1)->isObscured())
+	{
 		return 0;
 	}
 
