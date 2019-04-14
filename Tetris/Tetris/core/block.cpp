@@ -28,6 +28,7 @@ Block::~Block()
 void
 Block::start()
 {
+	resetBlockRowList(mNumRows, mNumCols);
 	newBlock();
 }
 
@@ -63,6 +64,28 @@ Block::checkRows()
 			removeRow(rowNumber);
 			return 0;
 		}
+	}
+}
+
+void
+Block::resetBlockRowList(int aNumRows, int aNumCols)
+{
+	//Sett mBlockRowList til null og reset
+
+	for (int row = 0; row < aNumRows; row++)
+	{
+		QList<QGraphicsItem*>* colList = new QList<QGraphicsItem*>;
+		for (int col = 0; col < aNumCols; col++)
+		{
+			QGraphicsRectItem* mTile = new QGraphicsRectItem;
+			mTile = NULL;
+
+			if (col != 0 || col != aNumCols - 1)
+			{
+				colList->append(mTile);
+			}
+		}
+		mBlockRowList.append(colList);
 	}
 }
 
@@ -145,6 +168,7 @@ Block::moveBlockDown()
 	if (y == (mNumRows - 2) * mTileSize)
 	{
 		mTimer->stop();
+		newBlock();
 		return 0;
 	}
 
