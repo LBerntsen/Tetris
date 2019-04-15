@@ -45,9 +45,10 @@ Block::removeRow(int aRow)
 	//
 	//
 	//
-	for (int i = 0; i < mNumCols; i++)
+	for (int i = 0; i < mBlockRowList.at(aRow)->size(); i++)
 	{
-		mBlockRowList.at(aRow)->at(i)->hide();
+		QGraphicsItem* deleteBlock = mBlockRowList.at(aRow)->at(i);
+		deleteBlock->setVisible(false);
 	}
 	
 	newBlock();
@@ -63,13 +64,16 @@ Block::checkRows()
 	for (int i = mNumRows - 2; i > 1; i--)
 	{
 		if (obscuredNumber == mNumCols - 2)
+		{
+			rowNumber = i;
 			break;
+		}
 
-		obscuredNumber = 0;
 		rowNumber = i;
+		obscuredNumber = 0;
 		for (int c = 1; c < mNumCols - 1; c++)
 		{
-			obscured = mGridRowList.at(i)->at(c)->isObscured();
+			obscured = mGridRowList.at(rowNumber)->at(c)->isObscured();
 			obscuredNumber++;
 			if (obscured == false)
 				obscuredNumber = 0;
@@ -225,12 +229,8 @@ Block::moveBlockDown()
 	else if (mGridRowList.at(getYListIndex() + 1)->at(getXListIndex())->isObscured())
 	{
 		mTimer->stop();
-		y = mBlock->y();
-		y = (y) / mTileSize;
-		x = mBlock->x();
-		x = (x) / mTileSize;
-
-		mBlockRowList.at(y)->replace(x, mBlock);
+		
+		mBlockRowList.at(getYListIndex())->replace(getXListIndex(), mBlock);
 		checkRows();
 		return 0;
 	}
