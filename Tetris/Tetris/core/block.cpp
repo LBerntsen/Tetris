@@ -223,14 +223,14 @@ Block::moveBlockDown()
 	if (y == (mNumRows - 2) * mTileSize)
 	{
 		mTimer->stop();
+
+		mBlockRowList.at(getYListIndex())->replace(getXListIndex(), mBlock);
 		checkRows();
 		return 0;
 	}
 	else if (mGridRowList.at(getYListIndex() + 1)->at(getXListIndex())->isObscured())
 	{
 		mTimer->stop();
-		
-		mBlockRowList.at(getYListIndex())->replace(getXListIndex(), mBlock);
 		checkRows();
 		return 0;
 	}
