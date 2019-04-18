@@ -105,6 +105,6 @@ int
 Game::keyTestReciever()
 {
 	qDebug() << "Test button pressed!";
-	mBlock->checkRows();
+
 	return 0;
 }

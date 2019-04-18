@@ -36,22 +36,18 @@ void
 Block::removeRow(int aRow)
 {
 	qDebug() << "Removed row " << aRow;
-	 
-	//Remove row
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+
 	for (int i = 0; i < mBlockRowList.at(aRow)->size(); i++)
 	{
 		QGraphicsItem* deleteBlock = mBlockRowList.at(aRow)->at(i);
-		deleteBlock->setVisible(false);
+		QGraphicsItem* emptyItem = new QGraphicsRectItem;
+		//deleteBlock->setVisible(false);
+		mScene->removeItem(deleteBlock);
+		mBlockRowList.at(aRow)->replace(i, emptyItem);
 	}
-	
-	newBlock();
+
+	//Flytt alt 1 hakk ned i QListen 
+	checkRows();
 }
 
 int
@@ -231,6 +227,8 @@ Block::moveBlockDown()
 	else if (mGridRowList.at(getYListIndex() + 1)->at(getXListIndex())->isObscured())
 	{
 		mTimer->stop();
+
+		mBlockRowList.at(getYListIndex())->replace(getXListIndex(), mBlock);
 		checkRows();
 		return 0;
 	}
