@@ -12,9 +12,9 @@ Block::Block(int aTileSize, int aNumCols, int aNumRows, int aTimerInterval, Game
 	mTileSize = aTileSize;
 	mNumCols = aNumCols;
 	mNumRows = aNumRows;
+	mTimerInterval = aTimerInterval;
 	mScene = aScene;
 	mGridRowList = aGridRowList;
-	mTimerInterval = aTimerInterval;
 
 	mTimer = new QTimer(this);
 	connect(mTimer, SIGNAL(timeout()), this, SLOT(moveBlockDown()));
@@ -36,14 +36,23 @@ void
 Block::removeRow(int aRow)
 {
 	qDebug() << "Removed row " << aRow;
-
+	
+	for (int i = 0; i < mBlockRowList.at(aRow)->size(); i++)
+	{	
+		qDebug() << mBlockRowList.at(aRow)->at(i);
+	}
+	
 	for (int i = 0; i < mBlockRowList.at(aRow)->size(); i++)
 	{
 		QGraphicsItem* deleteBlock = mBlockRowList.at(aRow)->at(i);
 		QGraphicsItem* emptyItem = new QGraphicsRectItem;
-		//deleteBlock->setVisible(false);
 		mScene->removeItem(deleteBlock);
 		mBlockRowList.at(aRow)->replace(i, emptyItem);
+	}
+
+	for (int i = 0; i < mBlockRowList.at(aRow)->size(); i++)
+	{
+		qDebug() << mBlockRowList.at(aRow)->at(i);
 	}
 
 	//Flytt alt 1 hakk ned i QListen 
@@ -97,12 +106,12 @@ Block::makeBlockRowList(int aNumRows, int aNumCols)
 	{
 		for (int col = 0; col < aNumCols; col++)
 		{
-			QGraphicsRectItem* mTile = new QGraphicsRectItem;
+			QGraphicsItem* mTile = new QGraphicsRectItem;
 
 			if (col != 0 || col != aNumCols - 1)
 			{
 				colList->append(mTile);
-			}
+			} 
 		}
 		mBlockRowList.append(colList);
 	}
@@ -214,9 +223,8 @@ int
 Block::moveBlockDown()
 {
 	int y = mBlock->y();
-	int x = mBlock->x();
 
-	if (y == (mNumRows - 2) * mTileSize)
+	if (mGridRowList.at(getYListIndex() + 1)->at(getXListIndex())->isObscured())
 	{
 		mTimer->stop();
 
@@ -224,7 +232,7 @@ Block::moveBlockDown()
 		checkRows();
 		return 0;
 	}
-	else if (mGridRowList.at(getYListIndex() + 1)->at(getXListIndex())->isObscured())
+	else if (y == (mNumRows - 2) * mTileSize)
 	{
 		mTimer->stop();
 
