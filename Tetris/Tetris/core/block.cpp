@@ -38,21 +38,11 @@ Block::removeRow(int aRow)
 	qDebug() << "Removed row " << aRow;
 	
 	for (int i = 0; i < mBlockRowList.at(aRow)->size(); i++)
-	{	
-		qDebug() << mBlockRowList.at(aRow)->at(i);
-	}
-	
-	for (int i = 0; i < mBlockRowList.at(aRow)->size(); i++)
 	{
-		QGraphicsItem* deleteBlock = mBlockRowList.at(aRow)->at(i);
+		mBlock = mBlockRowList.at(aRow)->at(i);
 		QGraphicsItem* emptyItem = new QGraphicsRectItem;
-		mScene->removeItem(deleteBlock);
+		mScene->removeItem(mBlock);
 		mBlockRowList.at(aRow)->replace(i, emptyItem);
-	}
-
-	for (int i = 0; i < mBlockRowList.at(aRow)->size(); i++)
-	{
-		qDebug() << mBlockRowList.at(aRow)->at(i);
 	}
 
 	//Flytt alt 1 hakk ned i QListen 
@@ -94,16 +84,19 @@ Block::checkRows()
 		else
 		{
 			newBlock();
+			return 0;
 		}
+
+		return 0;
 }
 
 void
 Block::makeBlockRowList(int aNumRows, int aNumCols)
 {
-	QList<QGraphicsItem*>* colList = new QList<QGraphicsItem*>;
 
 	for (int row = 0; row < aNumRows; row++)
 	{
+		QList<QGraphicsItem*>* colList = new QList<QGraphicsItem*>;
 		for (int col = 0; col < aNumCols; col++)
 		{
 			QGraphicsItem* mTile = new QGraphicsRectItem;
