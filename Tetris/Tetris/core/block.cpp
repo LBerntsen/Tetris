@@ -40,13 +40,23 @@ Block::removeRow(int aRow)
 	for (int i = 0; i < mBlockRowList.at(aRow)->size(); i++)
 	{
 		mBlock = mBlockRowList.at(aRow)->at(i);
-		QGraphicsItem* emptyItem = new QGraphicsRectItem;
 		mScene->removeItem(mBlock);
-		mBlockRowList.at(aRow)->replace(i, emptyItem);
+		mBlockRowList.at(aRow)->replace(i, NULL);
 	}
 
-	//Flytt alt 1 hakk ned i QListen 
-	checkRows();
+	moveRowDown(aRow);
+}
+
+void
+Block::moveRowDown(int aRemoved)
+{
+	for (int rowIndex = aRemoved; rowIndex > 1; rowIndex--)
+	{
+		QList<QGraphicsItem *>* deleteRowPointer = mBlockRowList.at(rowIndex);
+		mBlockRowList.replace(rowIndex, mBlockRowList.at(rowIndex - 1));
+		qDeleteAll(*deleteRowPointer);
+		delete deleteRowPointer;
+	}
 }
 
 int
@@ -79,15 +89,21 @@ Block::checkRows()
 		{
 			qDebug() << "Remove row: " << rowNumber;
 			removeRow(rowNumber);
-			return 0;
+			checkRows();
 		}
-		else
+		else if(obscuredNumber != mNumCols - 2)
 		{
 			newBlock();
 			return 0;
 		}
 
 		return 0;
+}
+
+void
+Block::manageRows()
+{
+
 }
 
 void
@@ -99,11 +115,9 @@ Block::makeBlockRowList(int aNumRows, int aNumCols)
 		QList<QGraphicsItem*>* colList = new QList<QGraphicsItem*>;
 		for (int col = 0; col < aNumCols; col++)
 		{
-			QGraphicsItem* mTile = new QGraphicsRectItem;
-
 			if (col != 0 || col != aNumCols - 1)
 			{
-				colList->append(mTile);
+				colList->append(NULL);
 			} 
 		}
 		mBlockRowList.append(colList);

@@ -17,7 +17,9 @@ public:
 	virtual ~Block();
 	void start();
 	void removeRow(int aRow);
+	void moveRowDown(int aRemoved);
 	int checkRows();
+	void manageRows();
 	void makeBlockRowList(int aNumRows, int aNumCols);
 
 private:
