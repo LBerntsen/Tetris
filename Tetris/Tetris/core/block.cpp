@@ -43,7 +43,7 @@ Block::manageRows()
 	{
 		row = checkRow(i);
 	
-		if (row != 0 || row != mNumRows)
+		if (row != 0 && row != mNumRows)
 		{
 			rowRemoved = removeRow(row);
 			moveRowDown(rowRemoved);
@@ -69,8 +69,9 @@ Block::checkRow(int aRow)
 	
 	for (int i = 1; i < mNumCols - 1; i++)
 	{
-		obscured = mGridRowList.at(aRow)->at(i)->isObscured();
-		if (obscured)
+		QGraphicsItem *item;
+		item = mGridRowList.at(aRow)->at(i);
+		if(item && item->isObscured())
 			obscuredTile++;
 	}
 
