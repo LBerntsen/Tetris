@@ -33,6 +33,54 @@ Block::start()
 }
 
 void
+Block::manageRows()
+{
+	int row = 0;
+	int rowRemoved = 0;
+	bool removedARow = false;
+
+	for (int i = mNumRows - 2; i > 1; i--)
+	{
+		row = checkRow(i);
+	
+		if (row != 0 || row != mNumRows)
+		{
+			rowRemoved = removeRow(row);
+			moveRowDown(rowRemoved);
+			removedARow = true;
+			break;
+		}
+	}
+
+	if (removedARow)
+	{
+		removedARow = false;
+		manageRows();
+	}
+	else if(!removedARow)
+		newBlock();
+}
+
+int
+Block::checkRow(int aRow)
+{
+	bool obscured = false;
+	int obscuredTile = 0;
+	
+	for (int i = 1; i < mNumCols - 1; i++)
+	{
+		obscured = mGridRowList.at(aRow)->at(i)->isObscured();
+		if (obscured)
+			obscuredTile++;
+	}
+
+	if (obscuredTile == mNumCols - 2)
+		return aRow;
+	else if (obscuredTile != mNumCols - 2)
+		return 0;
+}
+
+int
 Block::removeRow(int aRow)
 {
 	qDebug() << "Removed row " << aRow;
@@ -44,7 +92,7 @@ Block::removeRow(int aRow)
 		mBlockRowList.at(aRow)->replace(i, NULL);
 	}
 
-	moveRowDown(aRow);
+	return aRow;
 }
 
 void
@@ -57,53 +105,6 @@ Block::moveRowDown(int aRemoved)
 		qDeleteAll(*deleteRowPointer);
 		delete deleteRowPointer;
 	}
-}
-
-int
-Block::checkRows()
-{
-	bool obscured = true;
-	int obscuredNumber = 0;
-	int rowNumber = 0;
-
-	for (int i = mNumRows - 2; i > 1; i--)
-	{
-		if (obscuredNumber == mNumCols - 2)
-		{
-			rowNumber = i;
-			break;
-		}
-
-		rowNumber = i;
-		obscuredNumber = 0;
-		for (int c = 1; c < mNumCols - 1; c++)
-		{
-			obscured = mGridRowList.at(rowNumber)->at(c)->isObscured();
-			obscuredNumber++;
-			if (obscured == false)
-				obscuredNumber = 0;
-		}
-	}
-	
-		if (obscuredNumber == mNumCols - 2)
-		{
-			qDebug() << "Remove row: " << rowNumber;
-			removeRow(rowNumber);
-			checkRows();
-		}
-		else if(obscuredNumber != mNumCols - 2)
-		{
-			newBlock();
-			return 0;
-		}
-
-		return 0;
-}
-
-void
-Block::manageRows()
-{
-	
 }
 
 void
@@ -236,7 +237,7 @@ Block::moveBlockDown()
 		mTimer->stop();
 
 		mBlockRowList.at(getYListIndex())->replace(getXListIndex(), mBlock);
-		checkRows();
+		manageRows();
 		return 0;
 	}
 	else if (y == (mNumRows - 2) * mTileSize)
@@ -244,7 +245,7 @@ Block::moveBlockDown()
 		mTimer->stop();
 
 		mBlockRowList.at(getYListIndex())->replace(getXListIndex(), mBlock);
-		checkRows();
+		manageRows();
 		return 0;
 	}
 

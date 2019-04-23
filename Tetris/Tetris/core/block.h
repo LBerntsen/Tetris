@@ -16,10 +16,10 @@ public:
 	Block(int aTileSize, int aNumCols, int aNumRows, int aTimerInterval, GameScene *aScene, QList<QList<QGraphicsItem *> *> aGridRowList);
 	virtual ~Block();
 	void start();
-	void removeRow(int aRow);
-	void moveRowDown(int aRemoved);
-	int checkRows();
 	void manageRows();
+	int checkRow(int aRow);
+	int removeRow(int aRow);
+	void moveRowDown(int aRemoved);
 	void makeBlockRowList(int aNumRows, int aNumCols);
 
 private:
