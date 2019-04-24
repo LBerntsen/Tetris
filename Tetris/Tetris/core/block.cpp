@@ -86,15 +86,8 @@ Block::removeRow(int aRow)
 {
 	qDebug() << "Removed row " << aRow;
 	
-	for (int i = 0; i < mBlockRowList.at(aRow)->size(); i++)
-	{
-		if (i != 0 && i != mNumCols - 1)
-		{
-			mBlock = mBlockRowList.at(aRow)->at(i);
-			mScene->removeItem(mBlock);
-			mBlockRowList.at(aRow)->replace(i, NULL);
-		}
-	}
+	QList<QGraphicsItem *>* deleteRowPointer = mBlockRowList.at(aRow);
+	qDeleteAll(*deleteRowPointer);
 
 	return aRow;
 }
@@ -104,7 +97,6 @@ Block::moveRowDown(int aRemoved)
 {
 	for (int rowIndex = aRemoved; rowIndex > 1; rowIndex--)
 	{
-		QList<QGraphicsItem *>* deleteRowPointer = mBlockRowList.at(rowIndex);
 
 		for (int i = 1; i < mNumCols - 1; i++)
 		{
@@ -116,8 +108,6 @@ Block::moveRowDown(int aRemoved)
 		}
 
 		mBlockRowList.replace(rowIndex, mBlockRowList.at(rowIndex - 1));
-		qDeleteAll(*deleteRowPointer);
-		delete deleteRowPointer;
 	}
 
 }
@@ -144,7 +134,7 @@ void
 Block::newBlock()
 {
 	mBlock = mScene->addRect(0, 0, mTileSize, mTileSize, QPen(), QBrush(QColor(randomColor())));
-	mBlock->setX(mTileSize * 5);
+	mBlock->setX(mTileSize * (mNumCols / 2));
 	mBlock->setY(mTileSize);
 	mBlock->setZValue(1);
 
@@ -251,7 +241,10 @@ Block::moveBlockDown()
 	{
 		mTimer->stop();
 
-		mBlockRowList.at(getYListIndex())->replace(getXListIndex(), mBlock);
+		QList<QGraphicsItem*>* list = mBlockRowList.at(getYListIndex());
+		if (list != NULL)
+			list->replace(getXListIndex(), mBlock);
+
 		manageRows();
 		return 0;
 	}
@@ -259,7 +252,10 @@ Block::moveBlockDown()
 	{
 		mTimer->stop();
 
-		mBlockRowList.at(getYListIndex())->replace(getXListIndex(), mBlock);
+		QList<QGraphicsItem*>* list = mBlockRowList.at(getYListIndex());
+		if(list != NULL)
+			list->replace(getXListIndex(), mBlock);
+
 		manageRows();
 		return 0;
 	}

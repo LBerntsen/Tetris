@@ -98,7 +98,7 @@ Game::getNumRows() const
 int
 Game::getNumCols() const
 {
-	return 12;
+	return 6;
 }
 
 int
