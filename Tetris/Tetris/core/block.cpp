@@ -88,9 +88,12 @@ Block::removeRow(int aRow)
 	
 	for (int i = 0; i < mBlockRowList.at(aRow)->size(); i++)
 	{
-		mBlock = mBlockRowList.at(aRow)->at(i);
-		mScene->removeItem(mBlock);
-		mBlockRowList.at(aRow)->replace(i, NULL);
+		if (i != 0 && i != mNumCols - 1)
+		{
+			mBlock = mBlockRowList.at(aRow)->at(i);
+			mScene->removeItem(mBlock);
+			mBlockRowList.at(aRow)->replace(i, NULL);
+		}
 	}
 
 	return aRow;
@@ -102,7 +105,11 @@ Block::moveRowDown(int aRemoved)
 	for (int rowIndex = aRemoved; rowIndex > 1; rowIndex--)
 	{
 		QList<QGraphicsItem *>* deleteRowPointer = mBlockRowList.at(rowIndex);
-		mBlockRowList.replace(rowIndex, mBlockRowList.at(rowIndex - 1));
+
+		QList<QGraphicsItem*>* list = mBlockRowList.at(rowIndex - 1);
+		mBlockRowList.replace(rowIndex, list);
+
+		//mBlockRowList.replace(rowIndex, mBlockRowList.at(rowIndex - 1));
 		qDeleteAll(*deleteRowPointer);
 		delete deleteRowPointer;
 	}
