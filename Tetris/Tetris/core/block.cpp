@@ -88,9 +88,12 @@ Block::removeRow(int aRow)
 	
 	for (int i = 0; i < mBlockRowList.at(aRow)->size(); i++)
 	{
-		mBlock = mBlockRowList.at(aRow)->at(i);
-		mScene->removeItem(mBlock);
-		mBlockRowList.at(aRow)->replace(i, NULL);
+		if (i != 0 && i != mNumCols - 1)
+		{
+			mBlock = mBlockRowList.at(aRow)->at(i);
+			mScene->removeItem(mBlock);
+			mBlockRowList.at(aRow)->replace(i, NULL);
+		}
 	}
 
 	return aRow;
