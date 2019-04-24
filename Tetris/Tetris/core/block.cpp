@@ -102,10 +102,21 @@ Block::moveRowDown(int aRemoved)
 	for (int rowIndex = aRemoved; rowIndex > 1; rowIndex--)
 	{
 		QList<QGraphicsItem *>* deleteRowPointer = mBlockRowList.at(rowIndex);
+
+		for (int i = 1; i < mNumCols - 1; i++)
+		{
+			QGraphicsItem* item = mBlockRowList.at(rowIndex - 1)->at(i);
+			if(item != NULL)
+			{
+				item->setY(item->y() + mTileSize);
+			}
+		}
+
 		mBlockRowList.replace(rowIndex, mBlockRowList.at(rowIndex - 1));
 		qDeleteAll(*deleteRowPointer);
 		delete deleteRowPointer;
 	}
+
 }
 
 void
