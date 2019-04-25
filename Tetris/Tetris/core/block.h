@@ -21,6 +21,10 @@ public:
 	int removeRow(int aRow);
 	void moveRowDown(int aRemoved);
 	void makeBlockRowList(int aNumRows, int aNumCols);
+	void resetGame();
+
+signals:
+	void sigGameOver();
 
 private:
 	void newBlock();

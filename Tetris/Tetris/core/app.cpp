@@ -10,6 +10,7 @@
 #include "gui/mainwindow.h"
 #include "core/game.h"
 #include "core/gameScene.h"
+#include "core/block.h"
 
 App *App::sThis = NULL;
 
@@ -28,6 +29,12 @@ App::App()
 
 	//Start Meny
 	startGameMenu();
+
+	mBlock = mGame->getBlock();
+	mScene = mGame->getScene();
+
+	connect(mBlock, SIGNAL(sigGameOver()), this, SLOT(gameOverReciever()));
+	connect(mScene, SIGNAL(sigKeyTestPressed()), this, SLOT(keyTestReciever()));
 }
 
 
@@ -84,4 +91,39 @@ App::startGameMenu()
 	{
 		exit(0);
 	}
+}
+
+void
+App::gameOverReciever()
+{
+	QMessageBox gameOverDialog;
+
+	gameOverDialog.setIcon(QMessageBox::Warning);
+	gameOverDialog.setText(QString("Game over!"));
+
+	QPushButton *restartButton = gameOverDialog.addButton(QString("Start på nytt"), QMessageBox::AcceptRole);
+	gameOverDialog.setDefaultButton(restartButton);
+
+	QPushButton *exitButton = gameOverDialog.addButton(QString("Avslutt spillet"), QMessageBox::RejectRole);
+
+	int execCode = gameOverDialog.exec();
+
+	if (execCode == QMessageBox::AcceptRole)
+	{
+		mGame->restart();
+	}
+	else if (execCode == QMessageBox::RejectRole)
+	{
+		exit(0);
+	}
+}
+
+int
+App::keyTestReciever()
+{
+	qDebug() << "Test button pressed!";
+
+	gameOverReciever();
+
+	return 0;
 }

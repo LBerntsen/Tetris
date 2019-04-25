@@ -20,7 +20,7 @@ Game::Game()
 	connect(mScene, SIGNAL(sigKeyLeftPressed()), mBlock, SLOT(keyLeftReciever()));
 	connect(mScene, SIGNAL(sigKeyRightPressed()), mBlock, SLOT(keyRightReciever()));
 	connect(mScene, SIGNAL(sigKeyDownPressed()), mBlock, SLOT(keyDownReciever()));
-	connect(mScene, SIGNAL(sigKeyTestPressed()), this, SLOT(keyTestReciever()));
+
 }
 
 
@@ -77,6 +77,13 @@ Game::gameStart()
 	mBlock->start();
 }
 
+void
+Game::restart()
+{
+	mBlock->resetGame();
+	mBlock->start();
+}
+
 QSize
 Game::getMapSize() const
 {
@@ -101,10 +108,8 @@ Game::getNumCols() const
 	return 6;
 }
 
-int
-Game::keyTestReciever()
+Block*
+Game::getBlock() 
 {
-	qDebug() << "Test button pressed!";
-
-	return 0;
+	return mBlock;
 }

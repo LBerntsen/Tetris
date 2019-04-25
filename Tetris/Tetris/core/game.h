@@ -22,8 +22,10 @@ public:
 	int getTileSize() const;
 	int getNumRows() const;
 	int getNumCols() const;
+	Block* getBlock();
 	void makeGrid(int aTileSize, int aRow, int aCols);
 	void gameStart();
+	void restart();
 
 private:
 	GameScene *mScene;
@@ -32,8 +34,6 @@ private:
 	QList<QList<QGraphicsItem *> *> mGridRowList;
 	int mTimerInterval;
 
-public slots:
-	int keyTestReciever();
 
 };
 

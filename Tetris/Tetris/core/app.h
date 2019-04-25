@@ -10,6 +10,7 @@ class QMessageBox;
 class QGraphicsTextItem;
 class MainWindow;
 class Game;
+class Block;
 
 /** Singleton MountainDew Valley; application class.
 */
@@ -26,10 +27,16 @@ public:
 	GameScene *getScene() const;
 	void startGameMenu();
 
+public slots:
+	void gameOverReciever();
+	int keyTestReciever();
+
 private:
 	static App *sThis;
 	MainWindow *mMainWindow;
 	Game *mGame;
+	Block *mBlock;
+	GameScene *mScene;
 };
 
 

@@ -131,6 +131,12 @@ Block::makeBlockRowList(int aNumRows, int aNumCols)
 }
 
 void
+Block::resetGame()
+{
+
+}
+
+void
 Block::newBlock()
 {
 	mBlock = mScene->addRect(0, 0, mTileSize, mTileSize, QPen(), QBrush(QColor(randomColor())));
@@ -245,6 +251,12 @@ Block::moveBlockDown()
 		if (list != NULL)
 			list->replace(getXListIndex(), mBlock);
 
+		if (mBlock->y() / mTileSize == 1)
+		{
+			emit sigGameOver();
+			return 0;
+		}
+
 		manageRows();
 		return 0;
 	}
@@ -256,6 +268,11 @@ Block::moveBlockDown()
 		if(list != NULL)
 			list->replace(getXListIndex(), mBlock);
 
+		if (mBlock->y() / mTileSize == 1)
+		{
+			emit sigGameOver();
+			return 0;
+		}
 		manageRows();
 		return 0;
 	}
