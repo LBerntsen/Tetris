@@ -7,3 +7,6 @@ Viktig:
 
 Ekstra:
 -Les gjennom kode fjern unødvendig variabler og pekere
+-Score i title
+-Ekstra block
+-Speedopp
