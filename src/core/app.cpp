@@ -34,7 +34,7 @@ App::App()
 	mBlock = mGame->getBlock();
 	mScene = mGame->getScene();
 
-	connect(mBlock, SIGNAL(sigGameOver()), this, SLOT(gameOverReciever()));
+	connect(mGame, &Game::sigGameOver, this, &App::gameOverReciever);
 	connect(mScene, SIGNAL(sigKeyTestPressed()), this, SLOT(keyTestReciever()));
 }
 

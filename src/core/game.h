@@ -27,11 +27,23 @@ public:
 	void gameStart();
 	void restart();
 
+signals:
+	void sigGameOver();
+
 private:
+	void makeBlockRowList(int aNumRows, int aNumCols);
+	void placeTiles(QList<int> aXListIndexes, QList<int> aYListIndexes, QList<QGraphicsItem *> aBlockTiles);
+	void placeTile(int aXListIndex, int aYListIndex, QGraphicsItem *aBlockTile);
+	void manageRows();
+	int checkRow(int aRow);
+	int removeRow(int aRow);
+	void moveRowDown(int aRemoved);
+
 	GameScene *mScene;
 	QSize mSize;
 	Block *mBlock;
 	QList<QList<QGraphicsItem *> *> mGridRowList;
+	QList<QList<QGraphicsItem *> *> mBlockRowList;
 	int mTimerInterval;
 
 

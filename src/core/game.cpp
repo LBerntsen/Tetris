@@ -20,7 +20,7 @@ Game::Game()
 	connect(mScene, SIGNAL(sigKeyLeftPressed()), mBlock, SLOT(keyLeftReciever()));
 	connect(mScene, SIGNAL(sigKeyRightPressed()), mBlock, SLOT(keyRightReciever()));
 	connect(mScene, SIGNAL(sigKeyDownPressed()), mBlock, SLOT(keyDownReciever()));
-
+	connect(mBlock, &Block::sigPlaceTiles, this, &Game::placeTiles);
 }
 
 
@@ -74,6 +74,7 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 void
 Game::gameStart()
 {
+	makeBlockRowList(getNumRows(), getNumCols());
 	mBlock->start();
 }
 
@@ -112,4 +113,120 @@ Block*
 Game::getBlock() 
 {
 	return mBlock;
+}
+
+void
+Game::makeBlockRowList(int aNumRows, int aNumCols)
+{
+	for(int row = 0; row < aNumRows; row++)
+	{
+		QList<QGraphicsItem *> *colList = new QList<QGraphicsItem *>;
+		for(int col = 0; col < aNumCols; col++)
+		{
+			if(col != 0 || col != aNumCols - 1)
+			{
+				colList->append(NULL);
+			}
+		}
+		mBlockRowList.append(colList);
+	}
+}
+
+void
+Game::placeTiles(QList<int> aXListIndexes, QList<int> aYListIndexes, QList<QGraphicsItem *> aBlockTiles)
+{
+	for(int i = 0; i < aXListIndexes.size(); i++)
+	{
+		placeTile(aXListIndexes[i], aYListIndexes[i], aBlockTiles[i]);
+
+		if (aBlockTiles[i]->y() / getTileSize() == 1)
+		{
+			emit sigGameOver();
+			return;
+		}
+	}
+
+	manageRows();
+}
+
+void
+Game::placeTile(int aXListIndex, int aYListIndex, QGraphicsItem *aBlockTile)
+{
+	QList<QGraphicsItem *> *list = mBlockRowList.at(aYListIndex);
+	list->replace(aXListIndex, aBlockTile);
+}
+
+void
+Game::manageRows()
+{
+	int row = 0;
+	int rowRemoved = 0;
+	bool removedARow = false;
+
+	for (int i = getNumRows() - 2; i > 1; i--)
+	{
+		row = checkRow(i);
+
+		if (row != 0 && row != getNumRows())
+		{
+			rowRemoved = removeRow(row);
+			moveRowDown(rowRemoved);
+			removedARow = true;
+			break;
+		}
+	}
+
+	if (removedARow)
+	{
+		removedARow = false;
+		manageRows();
+	}
+	else
+		mBlock->newBlock();
+}
+
+int
+Game::checkRow(int aRow)
+{
+	int obscuredTile = 0;
+
+	for (int i = 1; i < getNumCols() - 1; i++)
+	{
+		QGraphicsItem *item = mGridRowList.at(aRow)->at(i);
+		if(item && item->isObscured())
+			obscuredTile++;
+	}
+
+	if (obscuredTile == getNumCols() - 2)
+		return aRow;
+	else if (obscuredTile != getNumCols() - 2)
+		return 0;
+}
+
+int
+Game::removeRow(int aRow)
+{
+	qDebug() << "Removed row " << aRow;
+
+	QList<QGraphicsItem *> *deleteRowPointer = mBlockRowList.at(aRow);
+	qDeleteAll(*deleteRowPointer);
+
+	return aRow;
+}
+
+void
+Game::moveRowDown(int aRemoved)
+{
+	for (int rowIndex = aRemoved; rowIndex > 1; rowIndex--)
+	{
+		for (int i = 1; i < getNumCols() - 1; i++)
+		{
+			QGraphicsItem* item = mBlockRowList.at(rowIndex - 1)->at(i);
+			if(item != NULL)
+			{
+				item->setY(item->y() + getTileSize());
+			}
+		}
+		mBlockRowList.replace(rowIndex, mBlockRowList.at(rowIndex - 1));
+	}
 }

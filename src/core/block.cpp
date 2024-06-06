@@ -28,106 +28,7 @@ Block::~Block()
 void
 Block::start()
 {
-	makeBlockRowList(mNumRows, mNumCols);
 	newBlock();
-}
-
-void
-Block::manageRows()
-{
-	int row = 0;
-	int rowRemoved = 0;
-	bool removedARow = false;
-
-	for (int i = mNumRows - 2; i > 1; i--)
-	{
-		row = checkRow(i);
-	
-		if (row != 0 && row != mNumRows)
-		{
-			rowRemoved = removeRow(row);
-			moveRowDown(rowRemoved);
-			removedARow = true;
-			break;
-		}
-	}
-
-	if (removedARow)
-	{
-		removedARow = false;
-		manageRows();
-	}
-	else if(!removedARow)
-		newBlock();
-}
-
-int
-Block::checkRow(int aRow)
-{
-	bool obscured = false;
-	int obscuredTile = 0;
-	
-	for (int i = 1; i < mNumCols - 1; i++)
-	{
-		QGraphicsItem *item;
-		item = mGridRowList.at(aRow)->at(i);
-		if(item && item->isObscured())
-			obscuredTile++;
-	}
-
-	if (obscuredTile == mNumCols - 2)
-		return aRow;
-	else if (obscuredTile != mNumCols - 2)
-		return 0;
-}
-
-int
-Block::removeRow(int aRow)
-{
-	qDebug() << "Removed row " << aRow;
-	
-	QList<QGraphicsItem *>* deleteRowPointer = mBlockRowList.at(aRow);
-	qDeleteAll(*deleteRowPointer);
-
-	return aRow;
-}
-
-void
-Block::moveRowDown(int aRemoved)
-{
-	for (int rowIndex = aRemoved; rowIndex > 1; rowIndex--)
-	{
-
-		for (int i = 1; i < mNumCols - 1; i++)
-		{
-			QGraphicsItem* item = mBlockRowList.at(rowIndex - 1)->at(i);
-			if(item != NULL)
-			{
-				item->setY(item->y() + mTileSize);
-			}
-		}
-
-		mBlockRowList.replace(rowIndex, mBlockRowList.at(rowIndex - 1));
-	}
-
-}
-
-void
-Block::makeBlockRowList(int aNumRows, int aNumCols)
-{
-
-	for (int row = 0; row < aNumRows; row++)
-	{
-		QList<QGraphicsItem*>* colList = new QList<QGraphicsItem*>;
-		for (int col = 0; col < aNumCols; col++)
-		{
-			if (col != 0 || col != aNumCols - 1)
-			{
-				colList->append(NULL);
-			} 
-		}
-		mBlockRowList.append(colList);
-	}
 }
 
 void
@@ -243,37 +144,42 @@ Block::moveBlockDown()
 {
 	int y = mBlock->y();
 
+	//COMBINE IFS
+
 	if (mGridRowList.at(getYListIndex() + 1)->at(getXListIndex())->isObscured())
 	{
 		mTimer->stop();
 
-		QList<QGraphicsItem*>* list = mBlockRowList.at(getYListIndex());
-		if (list != NULL)
-			list->replace(getXListIndex(), mBlock);
+		///TEMP PREP FOR SHAPES
+		QList<int> xList;
+		QList<int> yList;
+		QList<QGraphicsItem *> tileList;
 
-		if (mBlock->y() / mTileSize == 1)
-		{
-			emit sigGameOver();
-			return 0;
-		}
+		xList.append(getXListIndex());
+		yList.append(getYListIndex());
+		tileList.append(mBlock);
+		///
 
-		manageRows();
+		emit sigPlaceTiles(xList, yList, tileList);
+
 		return 0;
 	}
 	else if (y == (mNumRows - 2) * mTileSize)
 	{
 		mTimer->stop();
 
-		QList<QGraphicsItem*>* list = mBlockRowList.at(getYListIndex());
-		if(list != NULL)
-			list->replace(getXListIndex(), mBlock);
+		///TEMP PREP FOR SHAPES
+		QList<int> xList;
+		QList<int> yList;
+		QList<QGraphicsItem *> tileList;
 
-		if (mBlock->y() / mTileSize == 1)
-		{
-			emit sigGameOver();
-			return 0;
-		}
-		manageRows();
+		xList.append(getXListIndex());
+		yList.append(getYListIndex());
+		tileList.append(mBlock);
+		///
+
+		emit sigPlaceTiles(xList, yList, tileList);
+
 		return 0;
 	}
 

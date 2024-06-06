@@ -16,24 +16,19 @@ public:
 	Block(int aTileSize, int aNumCols, int aNumRows, int aTimerInterval, GameScene *aScene, QList<QList<QGraphicsItem *> *> aGridRowList);
 	virtual ~Block();
 	void start();
-	void manageRows();
-	int checkRow(int aRow);
-	int removeRow(int aRow);
-	void moveRowDown(int aRemoved);
-	void makeBlockRowList(int aNumRows, int aNumCols);
 	void resetGame();
+	void newBlock();
+
 
 signals:
-	void sigGameOver();
+	void sigPlaceTiles(QList<int> aXListIndexes, QList<int> aYListIndexes, QList<QGraphicsItem *> aBlockTiles);
 
 private:
-	void newBlock();
 	QTimer* mTimer;
 	QColor randomColor();
 	QGraphicsItem *mBlock;
 	GameScene *mScene;
 	QList<QList<QGraphicsItem *> *> mGridRowList;
-	QList<QList<QGraphicsItem *> *> mBlockRowList;
 	int mTileSize;
 	int mNumCols;
 	int mNumRows;
