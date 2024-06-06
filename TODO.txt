@@ -10,3 +10,4 @@ Ekstra:
 -Score i title
 -Ekstra block
 -Speedopp
+-Space for å sette block ned med en gang
