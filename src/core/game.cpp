@@ -99,13 +99,13 @@ Game::getTileSize() const
 int
 Game::getNumRows() const
 {
-	return 22;
+	return 16;
 }
 
 int
 Game::getNumCols() const
 {
-	return 6;
+	return 12;
 }
 
 Block*

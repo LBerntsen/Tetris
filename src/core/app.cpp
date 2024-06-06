@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QMessageBox>
+#include <QPushButton>
 
 // Project specific header files
 #include "gui/mainwindow.h"
@@ -22,7 +23,7 @@ App::App()
 	sThis = this;
 	mGame = new Game();
 	mMainWindow = new MainWindow(mGame);
-	//Vise eller tegne på bildet
+	//Vise eller tegne pï¿½ bildet
 	mMainWindow->show();	
 	mMainWindow->getView()->setScene(mGame->getScene());
 	mMainWindow->resize(mGame->getMapSize());
@@ -76,18 +77,19 @@ App::startGameMenu()
 	QMessageBox startDialog;
 
 	startDialog.setIcon(QMessageBox::Question);
-	startDialog.setText(QString("Lukas lagde Tetris for han er kul, vil du spille?"));
+	startDialog.setText(QString("Vil du spille?"));
 
-	QPushButton *yesButton = startDialog.addButton(QString("Ja"), QMessageBox::AcceptRole);
-	QPushButton *noButton = startDialog.addButton(QString("Nei (Avslutt spillet)"), QMessageBox::RejectRole);
-	
-	int execCode = startDialog.exec();
-	
-	if (execCode == QMessageBox::AcceptRole)
+	QPushButton *yesButton = startDialog.addButton("Ja", QMessageBox::YesRole);
+	startDialog.addButton(QString("Nei (Avslutt spillet)"), QMessageBox::RejectRole);
+
+	startDialog.exec();
+
+	if (startDialog.clickedButton() == yesButton)
 	{
+		qDebug() << "Game started";
 		mGame->gameStart();
 	}
-	else if (execCode == QMessageBox::RejectRole)
+	else
 	{
 		exit(0);
 	}
@@ -101,18 +103,17 @@ App::gameOverReciever()
 	gameOverDialog.setIcon(QMessageBox::Warning);
 	gameOverDialog.setText(QString("Game over!"));
 
-	QPushButton *restartButton = gameOverDialog.addButton(QString("Start på nytt"), QMessageBox::AcceptRole);
+	QPushButton *restartButton = gameOverDialog.addButton(QString("Start pÃ¥ nytt"), QMessageBox::AcceptRole);
 	gameOverDialog.setDefaultButton(restartButton);
+	gameOverDialog.addButton(QString("Avslutt spillet"), QMessageBox::RejectRole);
 
-	QPushButton *exitButton = gameOverDialog.addButton(QString("Avslutt spillet"), QMessageBox::RejectRole);
+	gameOverDialog.exec();
 
-	int execCode = gameOverDialog.exec();
-
-	if (execCode == QMessageBox::AcceptRole)
+	if (gameOverDialog.clickedButton() == restartButton)
 	{
 		mGame->restart();
 	}
-	else if (execCode == QMessageBox::RejectRole)
+	else
 	{
 		exit(0);
 	}
