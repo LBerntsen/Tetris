@@ -150,11 +150,11 @@ Block::newBlock()
 QColor
 Block::randomColor()
 {
-	qsrand(time(NULL));
+	srand(time(NULL));
 	
 	QColor color;
 	int random;
-	random = qrand() % 5 + 1;
+	random = rand() % 5 + 1;
 
 	switch (random)
 	{
