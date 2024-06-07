@@ -9,9 +9,15 @@
 #include <QBrush>
 #include <QList>
 
-///
+// Blocks
+#include "core/Blocks/jblock.h"
+#include "core/Blocks/lblock.h"
+#include "core/Blocks/reversezblock.h"
 #include "core/Blocks/square.h"
-/// ////
+#include "core/Blocks/straightblock.h"
+#include "core/Blocks/tblock.h"
+#include "core/Blocks/zblock.h"
+
 Game::Game()
 {
 	mScene = new GameScene;
@@ -21,6 +27,8 @@ Game::Game()
 	connect(mScene, &GameScene::sigKeyLeftPressed, this, &Game::keyLeftReciever);
 	connect(mScene, &GameScene::sigKeyRightPressed, this, &Game::keyRightReciever);
 	connect(mScene, &GameScene::sigKeyDownPressed, this, &Game::keyDownReciever);
+	connect(mScene, &GameScene::sigKeyQPressed, this, &Game::keyQReciever);
+	connect(mScene, &GameScene::sigKeyEPressed, this, &Game::keyEReciever);
 }
 
 
@@ -127,6 +135,18 @@ void
 Game::keyDownReciever()
 {
 	mBlock->keyDownReciever();
+}
+
+void
+Game::keyQReciever()
+{
+	mBlock->rotateCCW();
+}
+
+void
+Game::keyEReciever()
+{
+	mBlock->rotateCW();
 }
 
 void
@@ -249,7 +269,7 @@ Game::moveRowDown(int aRemoved)
 void
 Game::newBlock()
 {
-	Square *t = new Square(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 0);
+	ZBlock *t = new ZBlock(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 0);
 	t->startBlock();
 	mBlock = t;
 	connect(t, &BlockShape::sigPlaceTiles, this, &Game::placeTilesReciever);

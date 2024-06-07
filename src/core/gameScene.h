@@ -15,6 +15,8 @@ signals:
 	void sigKeyRightPressed();
 	void sigKeyDownPressed();
 	void sigKeyTestPressed();
+	void sigKeyQPressed();
+	void sigKeyEPressed();
 
 private:
 	void keyPressEvent(QKeyEvent *event);

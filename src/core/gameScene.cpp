@@ -31,8 +31,16 @@ GameScene::keyPressEvent(QKeyEvent *event)
 	{
 		emit sigKeyDownPressed();
 	}
-	else if (Qt::Key_Space == event->key()) //Spacebar for testing må fjernes når spillet er ferdig
+	else if (Qt::Key_Space == event->key()) //Spacebar for testing mï¿½ fjernes nï¿½r spillet er ferdig
 	{
 		emit sigKeyTestPressed();
+	}
+	else if(Qt::Key_Q == event->key())
+	{
+		emit sigKeyQPressed();
+	}
+	else if(Qt::Key_E == event->key())
+	{
+		emit sigKeyEPressed();
 	}
 }

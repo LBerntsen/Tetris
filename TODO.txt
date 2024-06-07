@@ -9,3 +9,4 @@ Ekstra:
 -Ekstra block
 -Speedopp
 -Space for å sette block ned med en gang
+- Can rotate slik at vi ikke kan gå inn i random blokker

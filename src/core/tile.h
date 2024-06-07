@@ -16,6 +16,8 @@ public:
     QGraphicsRectItem *getTile() const;
     int getXListIndex() const;
     int getYListIndex() const;
+    void rotateCCW();
+    void rotateCW();
 private:
     QGraphicsRectItem *mTile;
     int mTileSize;

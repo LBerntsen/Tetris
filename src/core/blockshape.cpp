@@ -34,6 +34,7 @@ BlockShape::startBlock()
     QColor color = randomColor();
     createBlock(color);
     createGroup();
+    setPivotPoint();
     //mTimer->start(mTimerInterval);
 }
 
@@ -124,6 +125,26 @@ BlockShape::keyDownReciever()
         }
     }
     mTileGroup->setY(mTileGroup->y() + mTileSize);
+}
+
+void
+BlockShape::rotateCCW()
+{
+    mTileGroup->setRotation(mTileGroup->rotation() - 90);
+    for (int i = 0; i < mTiles.size(); i++)
+    {
+        mTiles[i]->rotateCW();
+    }
+}
+
+void
+BlockShape::rotateCW()
+{
+    mTileGroup->setRotation(mTileGroup->rotation() + 90);
+    for(int i = 0; i < mTiles.size(); i++)
+    {
+        mTiles[i]->rotateCCW();
+    }
 }
 
 void

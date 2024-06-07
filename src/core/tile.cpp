@@ -15,6 +15,7 @@ Tile::Tile(int aXIndex, int aYIndex, int aTileSize, QColor aColor)
     mTile->setY(aYIndex * mTileSize);
     mTile->setZValue(1);
     mTile->setBrush(QBrush(aColor));
+    mTile->setTransformOriginPoint(mTileSize / 2, mTileSize / 2);
 }
 
 Tile::~Tile()
@@ -40,5 +41,15 @@ Tile::getYListIndex() const
     return mTile->scenePos().y() / mTileSize;
 }
 
+void
+Tile::rotateCCW()
+{
+    mTile->setRotation(mTile->rotation() - 90);
+}
 
+void
+Tile::rotateCW()
+{
+    mTile->setRotation(mTile->rotation() + 90);
+}
 

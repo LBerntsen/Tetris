@@ -14,6 +14,7 @@ public:
 
 private:
     void createBlock(QColor aColor) override;
+    void setPivotPoint() override;
 };
 
 #endif //TBLOCK_H

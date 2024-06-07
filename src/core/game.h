@@ -30,6 +30,8 @@ public slots:
 	int keyLeftReciever();
 	int keyRightReciever();
 	void keyDownReciever();
+	void keyQReciever();
+	void keyEReciever();
 	void placeTilesReciever(QList<int> aXListIndexes, QList<int> aYListIndexes, QList<QGraphicsItem *> aBlockTiles);
 
 

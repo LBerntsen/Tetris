@@ -4,7 +4,6 @@
 
 #include "square.h"
 #include "core/tile.h"
-#include "core/gameScene.h"
 
 #include <QColor>
 #include <QGraphicsRectItem>
@@ -19,7 +18,8 @@ Square::~Square()
 
 }
 
-void Square::createBlock(QColor aColor)
+void
+Square::createBlock(QColor aColor)
 {
     Tile *tile1 = new Tile(0, 0, mTileSize, aColor);
     Tile *tile2 = new Tile(1, 0, mTileSize, aColor);
@@ -30,4 +30,10 @@ void Square::createBlock(QColor aColor)
     mTiles.append(tile2);
     mTiles.append(tile3);
     mTiles.append(tile4);
+}
+
+void
+Square::setPivotPoint()
+{
+    mTileGroup->setTransformOriginPoint(QPointF(mTileSize, mTileSize));
 }

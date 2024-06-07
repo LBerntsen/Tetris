@@ -23,6 +23,8 @@ public:
     void keyLeftReciever();
     void keyRightReciever();
     void keyDownReciever();
+    void rotateCCW();
+    void rotateCW();
 
 signals:
     void sigPlaceTiles(QList<int> aXListIndexes, QList<int> aYListIndexes, QList<QGraphicsItem *> aBlockTiles);
@@ -30,6 +32,7 @@ signals:
 private:
     virtual void createBlock(QColor aColor) = 0;
     void createGroup();
+    virtual void setPivotPoint() = 0;
     void placeTiles();
     QColor randomColor();
 

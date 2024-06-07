@@ -34,7 +34,17 @@ add_executable(tetris
         src/core/Blocks/block.cpp
         src/core/Blocks/block.h
         src/core/Blocks/tblock.cpp
-        src/core/Blocks/tblock.h)
+        src/core/Blocks/tblock.h
+        src/core/Blocks/jblock.cpp
+        src/core/Blocks/jblock.h
+        src/core/Blocks/lblock.cpp
+        src/core/Blocks/lblock.h
+        src/core/Blocks/straightblock.cpp
+        src/core/Blocks/straightblock.h
+        src/core/Blocks/zblock.cpp
+        src/core/Blocks/zblock.h
+        src/core/Blocks/reversezblock.cpp
+        src/core/Blocks/reversezblock.h)
 
 target_link_libraries(tetris
         Qt::Core
