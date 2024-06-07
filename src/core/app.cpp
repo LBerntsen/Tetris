@@ -11,7 +11,7 @@
 #include "gui/mainwindow.h"
 #include "core/game.h"
 #include "core/gameScene.h"
-#include "core/block.h"
+#include "core/block1.h"
 
 App *App::sThis = NULL;
 

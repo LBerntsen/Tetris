@@ -1,5 +1,5 @@
-#ifndef BLOCK_H
-#define BLOCK_H
+#ifndef BLOCK1_H
+#define BLOCK1_H
 
 #include "core/gameScene.h"
 
@@ -10,17 +10,17 @@
 #include <QList>
 
 class Tile;
+class BlockShape;
 
-class Block : public QObject
+class Block1 : public QObject
 {
 	Q_OBJECT
 public:
-	Block(int aTileSize, int aNumCols, int aNumRows, int aTimerInterval, GameScene *aScene, QList<QList<QGraphicsItem *> *> aGridRowList);
-	virtual ~Block();
+	Block1(int aTileSize, int aNumCols, int aNumRows, int aTimerInterval, GameScene *aScene, QList<QList<QGraphicsItem *> *> aGridRowList);
+	virtual ~Block1();
 	void start();
 	void resetGame();
 	void newBlock();
-
 
 signals:
 	void sigPlaceTiles(QList<int> aXListIndexes, QList<int> aYListIndexes, QList<QGraphicsItem *> aBlockTiles);
@@ -29,6 +29,7 @@ private:
 	QTimer* mTimer;
 	QColor randomColor();
 	QList<Tile *> mTiles;
+	BlockShape *mBlock;
 	GameScene *mScene;
 	QList<QList<QGraphicsItem *> *> mGridRowList;
 	int mTileSize;
@@ -40,7 +41,7 @@ public slots:
 	int keyLeftReciever();
 	int keyRightReciever();
 	void keyDownReciever();
-	int moveBlockDown();
+	//int moveBlockDown();
 
 };
 #endif

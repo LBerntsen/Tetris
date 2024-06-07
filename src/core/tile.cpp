@@ -7,12 +7,12 @@
 #include <QGraphicsRectItem>
 #include <QBrush>
 
-Tile::Tile(int aX, int aY, int aXIndex, int aYIndex, int aTileSize, QColor aColor)
+Tile::Tile(int aX, int aY,int aXIndex, int aYIndex, int aTileSize, QColor aColor)
 {
     mTileSize = aTileSize;
     mTile = new QGraphicsRectItem(0, 0, mTileSize, mTileSize);
-    mTile->setX(aX + (aXIndex * mTileSize));
-    mTile->setY(aY + (aYIndex * mTileSize));
+    mTile->setX(aXIndex * mTileSize);
+    mTile->setY(aYIndex * mTileSize);
     mTile->setZValue(1);
     mTile->setBrush(QBrush(aColor));
 }

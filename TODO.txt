@@ -7,3 +7,5 @@ Viktig:
 
 Ekstra:
 -Les gjennom kode fjern unødvendig variabler og pekere
+
+-Samle felles greiene i create block

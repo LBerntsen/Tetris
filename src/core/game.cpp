@@ -1,6 +1,6 @@
 #include "core/game.h"
 #include "core/app.h"
-#include "core/block.h"
+#include "core/block1.h"
 #include "core/gameScene.h"
 
 #include <qDebug>
@@ -15,12 +15,16 @@ Game::Game()
 	mScene = new GameScene;
 	mTimerInterval = 1000;
 	makeGrid(getTileSize(), getNumRows(), getNumCols());
-	mBlock = new Block(getTileSize(), getNumCols(), getNumRows(), mTimerInterval, mScene, mGridRowList);
+	mBlock1 = new Block1(getTileSize(), getNumCols(), getNumRows(), mTimerInterval, mScene, mGridRowList);
 
-	connect(mScene, SIGNAL(sigKeyLeftPressed()), mBlock, SLOT(keyLeftReciever()));
-	connect(mScene, SIGNAL(sigKeyRightPressed()), mBlock, SLOT(keyRightReciever()));
-	connect(mScene, SIGNAL(sigKeyDownPressed()), mBlock, SLOT(keyDownReciever()));
-	connect(mBlock, &Block::sigPlaceTiles, this, &Game::placeTiles);
+	connect(mScene, &GameScene::sigKeyLeftPressed, mBlock1, &Block1::keyLeftReciever);
+	connect(mScene, &GameScene::sigKeyRightPressed, mBlock1, &Block1::keyRightReciever);
+	connect(mScene, &GameScene::sigKeyDownPressed, mBlock1, &Block1::keyDownReciever);
+
+	//connect(mScene, SIGNAL(sigKeyLeftPressed()), mBlock1, SLOT(keyLeftReciever()));
+	//connect(mScene, SIGNAL(sigKeyRightPressed()), mBlock1, SLOT(keyRightReciever()));
+	//connect(mScene, SIGNAL(sigKeyDownPressed()), mBlock1, SLOT(keyDownReciever()));
+	connect(mBlock1, &Block1::sigPlaceTiles, this, &Game::placeTiles);
 }
 
 
@@ -75,14 +79,14 @@ void
 Game::gameStart()
 {
 	makeBlockRowList(getNumRows(), getNumCols());
-	mBlock->start();
+	mBlock1->start();
 }
 
 void
 Game::restart()
 {
-	mBlock->resetGame();
-	mBlock->start();
+	mBlock1->resetGame();
+	mBlock1->start();
 }
 
 QSize
@@ -109,10 +113,10 @@ Game::getNumCols() const
 	return 12;
 }
 
-Block*
+Block1*
 Game::getBlock() 
 {
-	return mBlock;
+	return mBlock1;
 }
 
 void
@@ -182,7 +186,7 @@ Game::manageRows()
 		manageRows();
 	}
 	else
-		mBlock->newBlock();
+		mBlock1->newBlock();
 }
 
 int

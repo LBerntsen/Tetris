@@ -7,7 +7,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsItemGroup>
 
-class Block;
+class Block1;
 class GameScene;
 
 class Game : public QObject
@@ -22,7 +22,7 @@ public:
 	int getTileSize() const;
 	int getNumRows() const;
 	int getNumCols() const;
-	Block* getBlock();
+	Block1* getBlock();
 	void makeGrid(int aTileSize, int aRow, int aCols);
 	void gameStart();
 	void restart();
@@ -41,7 +41,7 @@ private:
 
 	GameScene *mScene;
 	QSize mSize;
-	Block *mBlock;
+	Block1 *mBlock1;
 	QList<QList<QGraphicsItem *> *> mGridRowList;
 	QList<QList<QGraphicsItem *> *> mBlockRowList;
 	int mTimerInterval;

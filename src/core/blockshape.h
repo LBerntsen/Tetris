@@ -12,33 +12,39 @@ class GameScene;
 class Tile;
 
 class QGraphicsItem;
+class QGraphicsItemGroup;
 
 class BlockShape : public QObject{
     Q_OBJECT
 public:
-    BlockShape(int aTileSize);
+    BlockShape(int aTileSize, int aHeight, int aWidth, QList<QList<QGraphicsItem *> *> aGridRowList, int aNumRows, int aNumCols);
     ~BlockShape();
     void startBlock(GameScene *aScene, int aTimerInterval, int aX, int aY);
+    int keyLeftReciever();
+    int keyRightReciever();
+    void keyDownReciever();
 
 signals:
     void sigPlaceTiles(QList<int> aXListIndexes, QList<int> aYListIndexes, QList<QGraphicsItem *> aBlockTiles);
 
-public slots:
-    virtual int keyLeftReciever() = 0;
-    virtual int keyRightReciever() = 0;
-    virtual int keyDownReciever() = 0;
-    virtual int moveBlockDown() = 0;
-
 private:
-    virtual void createBlock(GameScene *aScene, int aX, int aY) = 0;
+    virtual void createBlock(GameScene *aScene, QColor aColor, int aX, int aY) = 0;
+    void placeTiles();
+    QColor randomColor();
 
     QTimer *mTimer;
 
 protected:
-    QColor randomColor();
+    int getXListIndex() const;
+    int getYListIndex() const;
 
     int mTileSize;
+    int mHeight;
+    int mWidth;
+    int mNumRows;
+    int mNumCols;
     QList<Tile *> mTiles;
+    QGraphicsItemGroup *mTileGroup;
     QList<QList<QGraphicsItem *> *> mGridRowList;
 };
 
