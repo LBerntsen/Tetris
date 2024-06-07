@@ -1,26 +1,26 @@
 #include "core/game.h"
 #include "core/app.h"
-#include "core/block.h"
+#include "core/blockshape.h"
 #include "core/gameScene.h"
 
 #include <qDebug>
 #include <QGraphicsItem>
 #include <QGraphicsRectItem>
 #include <QBrush>
-#include <QPointF>
 #include <QList>
 
+///
+#include "core/Blocks/square.h"
+/// ////
 Game::Game()
 {
 	mScene = new GameScene;
 	mTimerInterval = 1000;
 	makeGrid(getTileSize(), getNumRows(), getNumCols());
-	mBlock = new Block(getTileSize(), getNumCols(), getNumRows(), mTimerInterval, mScene, mGridRowList);
 
-	connect(mScene, SIGNAL(sigKeyLeftPressed()), mBlock, SLOT(keyLeftReciever()));
-	connect(mScene, SIGNAL(sigKeyRightPressed()), mBlock, SLOT(keyRightReciever()));
-	connect(mScene, SIGNAL(sigKeyDownPressed()), mBlock, SLOT(keyDownReciever()));
-
+	connect(mScene, &GameScene::sigKeyLeftPressed, this, &Game::keyLeftReciever);
+	connect(mScene, &GameScene::sigKeyRightPressed, this, &Game::keyRightReciever);
+	connect(mScene, &GameScene::sigKeyDownPressed, this, &Game::keyDownReciever);
 }
 
 
@@ -55,7 +55,9 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 				tileColor = Qt::white;
 			}
 			QGraphicsRectItem *mTile = new QGraphicsRectItem;
-			mTile = mScene->addRect(x, y, aTileSize, aTileSize, QPen(), QBrush(QColor(tileColor)));
+			mTile = mScene->addRect(0, 0, aTileSize, aTileSize, QPen(), QBrush(QColor(tileColor)));
+			mTile->setX(x);
+			mTile->setY(y);
 			mTile->setZValue(-1);
 			if (col != 0 || col != aCols - 1)
 			{
@@ -74,14 +76,15 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 void
 Game::gameStart()
 {
-	mBlock->start();
+	makeBlockRowList(getNumRows(), getNumCols());
+	newBlock();
 }
 
 void
 Game::restart()
 {
-	mBlock->resetGame();
-	mBlock->start();
+	//Reset
+	//Start
 }
 
 QSize
@@ -108,8 +111,146 @@ Game::getNumCols() const
 	return 12;
 }
 
-Block*
-Game::getBlock() 
+int
+Game::keyLeftReciever()
 {
-	return mBlock;
+	mBlock->keyLeftReciever();
+}
+
+int
+Game::keyRightReciever()
+{
+	mBlock->keyRightReciever();
+}
+
+void
+Game::keyDownReciever()
+{
+	mBlock->keyDownReciever();
+}
+
+void
+Game::placeTilesReciever(QList<int> aXListIndexes, QList<int> aYListIndexes, QList<QGraphicsItem *> aBlockTiles)
+{
+	for (int i = 0; i < aXListIndexes.size(); i++)
+	{
+		placeTile(aXListIndexes[i], aYListIndexes[i], aBlockTiles[i]);
+
+		if (aBlockTiles[i]->y() / getTileSize() == 1)
+		{
+			emit sigGameOver();
+			return;
+		}
+	}
+
+	manageRows();
+}
+
+
+void
+Game::makeBlockRowList(int aNumRows, int aNumCols)
+{
+	for(int row = 0; row < aNumRows; row++)
+	{
+		QList<QGraphicsItem *> *colList = new QList<QGraphicsItem *>;
+		for(int col = 0; col < aNumCols; col++)
+		{
+			if(col != 0 || col != aNumCols - 1)
+			{
+				colList->append(NULL);
+			}
+		}
+		mBlockRowList.append(colList);
+	}
+}
+
+void
+Game::placeTile(int aXListIndex, int aYListIndex, QGraphicsItem *aBlockTile)
+{
+	QList<QGraphicsItem *> *list = mBlockRowList.at(aYListIndex);
+	list->replace(aXListIndex, aBlockTile);
+}
+
+void
+Game::manageRows()
+{
+	int row = 0;
+	int rowRemoved = 0;
+	bool removedARow = false;
+
+	for (int i = getNumRows() - 2; i > 1; i--)
+	{
+		row = checkRow(i);
+
+		if (row != 0 && row != getNumRows())
+		{
+			rowRemoved = removeRow(row);
+			moveRowDown(rowRemoved);
+			removedARow = true;
+			break;
+		}
+	}
+
+	if (removedARow)
+	{
+		removedARow = false;
+		manageRows();
+	}
+	else
+		newBlock();
+}
+
+int
+Game::checkRow(int aRow)
+{
+	int obscuredTile = 0;
+
+	for (int i = 1; i < getNumCols() - 1; i++)
+	{
+		QGraphicsItem *item = mGridRowList.at(aRow)->at(i);
+		if(item && item->isObscured())
+			obscuredTile++;
+	}
+
+	if (obscuredTile == getNumCols() - 2)
+		return aRow;
+	else if (obscuredTile != getNumCols() - 2)
+		return 0;
+}
+
+int
+Game::removeRow(int aRow)
+{
+	qDebug() << "Removed row " << aRow;
+
+	QList<QGraphicsItem *> *deleteRowPointer = mBlockRowList.at(aRow);
+	qDeleteAll(*deleteRowPointer);
+
+	return aRow;
+}
+
+void
+Game::moveRowDown(int aRemoved)
+{
+	for (int rowIndex = aRemoved; rowIndex > 1; rowIndex--)
+	{
+		for (int i = 1; i < getNumCols() - 1; i++)
+		{
+			QGraphicsItem* item = mBlockRowList.at(rowIndex - 1)->at(i);
+			if(item != NULL)
+			{
+				item->setY(item->y() + getTileSize());
+			}
+		}
+		mBlockRowList.replace(rowIndex, mBlockRowList.at(rowIndex - 1));
+	}
+}
+
+void
+Game::newBlock()
+{
+	Square *t = new Square(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 0);
+	t->startBlock();
+	mBlock = t;
+	connect(t, &BlockShape::sigPlaceTiles, this, &Game::placeTilesReciever);
 }

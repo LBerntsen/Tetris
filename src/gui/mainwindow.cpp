@@ -9,7 +9,6 @@
 
 // Project specific header files
 #include "core/app.h"
-#include "core/block.h"
 #include "core/game.h"
 
 // Constructor

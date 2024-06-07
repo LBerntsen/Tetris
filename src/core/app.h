@@ -10,7 +10,6 @@ class QMessageBox;
 class QGraphicsTextItem;
 class MainWindow;
 class Game;
-class Block;
 
 /** Singleton MountainDew Valley; application class.
 */
@@ -35,7 +34,6 @@ private:
 	static App *sThis;
 	MainWindow *mMainWindow;
 	Game *mGame;
-	Block *mBlock;
 	GameScene *mScene;
 };
 

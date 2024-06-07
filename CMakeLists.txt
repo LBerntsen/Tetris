@@ -18,15 +18,23 @@ add_executable(tetris
         src/core/main.cpp
         src/core/app.cpp
         src/core/app.h
-        src/core/block.cpp
-        src/core/block.h
         src/core/game.cpp
         src/core/game.h
         src/core/gameScene.cpp
         src/core/gameScene.h
         src/gui/mainwindow.cpp
         src/gui/mainwindow.h
-        src/gui/mainwindow.ui)
+        src/gui/mainwindow.ui
+        src/core/tile.cpp
+        src/core/tile.h
+        src/core/blockshape.cpp
+        src/core/blockshape.h
+        src/core/Blocks/square.cpp
+        src/core/Blocks/square.h
+        src/core/Blocks/block.cpp
+        src/core/Blocks/block.h
+        src/core/Blocks/tblock.cpp
+        src/core/Blocks/tblock.h)
 
 target_link_libraries(tetris
         Qt::Core

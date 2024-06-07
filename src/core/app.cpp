@@ -11,7 +11,6 @@
 #include "gui/mainwindow.h"
 #include "core/game.h"
 #include "core/gameScene.h"
-#include "core/block.h"
 
 App *App::sThis = NULL;
 
@@ -31,10 +30,9 @@ App::App()
 	//Start Meny
 	startGameMenu();
 
-	mBlock = mGame->getBlock();
 	mScene = mGame->getScene();
 
-	connect(mBlock, SIGNAL(sigGameOver()), this, SLOT(gameOverReciever()));
+	connect(mGame, &Game::sigGameOver, this, &App::gameOverReciever);
 	connect(mScene, SIGNAL(sigKeyTestPressed()), this, SLOT(keyTestReciever()));
 }
 
