@@ -249,8 +249,8 @@ Game::moveRowDown(int aRemoved)
 void
 Game::newBlock()
 {
-	Square *t = new Square(getTileSize(), mGridRowList, getNumRows(), getNumCols());
-	t->startBlock(mScene, 0, getTileSize() * (getNumCols() / 2), getTileSize());
+	Square *t = new Square(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 0);
+	t->startBlock();
 	mBlock = t;
 	connect(t, &BlockShape::sigPlaceTiles, this, &Game::placeTilesReciever);
 }

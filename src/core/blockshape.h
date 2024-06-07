@@ -17,9 +17,9 @@ class QGraphicsItemGroup;
 class BlockShape : public QObject{
     Q_OBJECT
 public:
-    BlockShape(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, int aNumRows, int aNumCols);
+    BlockShape(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, GameScene *aScene, int aNumRows, int aNumCols, int aTimerInterval);
     ~BlockShape();
-    void startBlock(GameScene *aScene, int aTimerInterval, int aX, int aY);
+    void startBlock();
     void keyLeftReciever();
     void keyRightReciever();
     void keyDownReciever();
@@ -28,7 +28,8 @@ signals:
     void sigPlaceTiles(QList<int> aXListIndexes, QList<int> aYListIndexes, QList<QGraphicsItem *> aBlockTiles);
 
 private:
-    virtual void createBlock(GameScene *aScene, QColor aColor, int aX, int aY) = 0;
+    virtual void createBlock(QColor aColor) = 0;
+    void createGroup();
     void placeTiles();
     QColor randomColor();
 
@@ -41,9 +42,11 @@ protected:
     int mTileSize;
     int mNumRows;
     int mNumCols;
+    int mTimerInterval;
     QList<Tile *> mTiles;
     QGraphicsItemGroup *mTileGroup;
     QList<QList<QGraphicsItem *> *> mGridRowList;
+    GameScene *mScene;
 };
 
 #endif //BLOCKSHAPE_H

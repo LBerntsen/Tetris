@@ -4,17 +4,21 @@
 
 #include "core/blockshape.h"
 #include "core/tile.h"
+#include "core/gameScene.h"
 
 #include <QColor>
 #include <QTimer>
 #include <QGraphicsItemGroup>
 
-BlockShape::BlockShape(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, int aNumRows, int aNumCols)
+BlockShape::BlockShape(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, GameScene *aScene, int aNumRows, int aNumCols, int aTimerInterval)
 {
     mTileSize = aTileSize;
     mNumRows = aNumRows;
     mNumCols = aNumCols;
     mGridRowList = aGridRowList;
+    mScene = aScene;
+    mTimerInterval = aTimerInterval;
+
     mTimer = new QTimer(this);
     //connect(mTimer, &QTimer::timeout, this, &BlockShape::moveBlockDown);
 }
@@ -25,11 +29,12 @@ BlockShape::~BlockShape()
 }
 
 void
-BlockShape::startBlock(GameScene *aScene, int aTimerInterval, int aX, int aY)
+BlockShape::startBlock()
 {
     QColor color = randomColor();
-    createBlock(aScene, color, aX, aY);
-    //mTimer->start(aTimerInterval);
+    createBlock(color);
+    createGroup();
+    //mTimer->start(mTimerInterval);
 }
 
 void
@@ -119,6 +124,20 @@ BlockShape::keyDownReciever()
         }
     }
     mTileGroup->setY(mTileGroup->y() + mTileSize);
+}
+
+void
+BlockShape::createGroup()
+{
+    mTileGroup = new QGraphicsItemGroup;
+
+    for (int i = 0; i < mTiles.size(); i++)
+        mTileGroup->addToGroup(mTiles[i]->getTile());
+
+    mTileGroup->setX(mTileSize * (mNumCols / 2));
+    mTileGroup->setY(mTileSize);
+
+    mScene->addItem(mTileGroup);
 }
 
 void

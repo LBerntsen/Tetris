@@ -10,11 +10,11 @@
 class Block : public BlockShape
 {
 public:
-    Block(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, int aNumRows, int aNumCols);
+    Block(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, GameScene *aScene, int aNumRows, int aNumCols, int aTimerInterval);
     ~Block();
 
 private:
-    void createBlock(GameScene *aScene, QColor aColor, int aX, int aY) override;
+    void createBlock(QColor aColor) override;
 };
 
 #endif //BLOCK_H

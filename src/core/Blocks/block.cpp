@@ -9,7 +9,7 @@
 #include <QColor>
 #include <QGraphicsRectItem>
 
-Block::Block(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, int aNumRows, int aNumCols) : BlockShape(aTileSize, aGridRowList, aNumRows, aNumCols)
+Block::Block(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, GameScene *aScene, int aNumRows, int aNumCols, int aTimerInterval) : BlockShape(aTileSize, aGridRowList, aScene, aNumRows, aNumCols, aTimerInterval)
 {
 
 }
@@ -20,16 +20,8 @@ Block::~Block()
 }
 
 void
-Block::createBlock(GameScene *aScene, QColor aColor, int aX, int aY)
+Block::createBlock(QColor aColor)
 {
     Tile *tile = new Tile(0, 0, mTileSize, aColor);
     mTiles.append(tile);
-    mTileGroup = new QGraphicsItemGroup;
-
-    for(int i = 0; i < mTiles.size(); i++)
-        mTileGroup->addToGroup(mTiles[i]->getTile());
-
-    mTileGroup->setX(aX);
-    mTileGroup->setY(aY);
-    aScene->addItem(mTileGroup);
 }

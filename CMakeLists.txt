@@ -32,7 +32,9 @@ add_executable(tetris
         src/core/Blocks/square.cpp
         src/core/Blocks/square.h
         src/core/Blocks/block.cpp
-        src/core/Blocks/block.h)
+        src/core/Blocks/block.h
+        src/core/Blocks/tblock.cpp
+        src/core/Blocks/tblock.h)
 
 target_link_libraries(tetris
         Qt::Core

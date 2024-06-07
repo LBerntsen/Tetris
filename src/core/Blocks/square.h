@@ -9,11 +9,11 @@
 
 class Square : public BlockShape{
 public:
-    Square(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, int aNumRows, int aNumCols);
+    Square(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, GameScene *aScene, int aNumRows, int aNumCols, int aTimerInterval);
     ~Square();
 
 private:
-    void createBlock(GameScene *aScene, QColor aColor, int aX, int aY) override;
+    void createBlock(QColor aColor) override;
 };
 
 #endif //SQUARE_H
