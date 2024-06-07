@@ -22,7 +22,7 @@ Block::~Block()
 void
 Block::createBlock(GameScene *aScene, QColor aColor, int aX, int aY)
 {
-    Tile *tile = new Tile(aX, aY, 0, 0, mTileSize, aColor);
+    Tile *tile = new Tile(0, 0, mTileSize, aColor);
     mTiles.append(tile);
     mTileGroup = new QGraphicsItemGroup;
 

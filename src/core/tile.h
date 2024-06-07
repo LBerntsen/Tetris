@@ -11,7 +11,7 @@ class QGraphicsRectItem;
 
 class Tile {
 public:
-    Tile(int aX, int aY, int aXIndex, int aYIndex, int aTileSize, QColor aColor);
+    Tile(int aXIndex, int aYIndex, int aTileSize, QColor aColor);
     ~Tile();
     QGraphicsRectItem *getTile() const;
     int getXListIndex() const;

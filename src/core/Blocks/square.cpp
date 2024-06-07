@@ -21,10 +21,10 @@ Square::~Square()
 
 void Square::createBlock(GameScene *aScene, QColor aColor, int aX, int aY)
 {
-    Tile *tile1 = new Tile(aX, aY, 0, 0, mTileSize, aColor);
-    Tile *tile2 = new Tile(aX, aY, 1, 0, mTileSize, aColor);
-    Tile *tile3 = new Tile(aX, aY, 0, 1, mTileSize, aColor);
-    Tile *tile4 = new Tile(aX, aY, 1, 1, mTileSize, aColor);
+    Tile *tile1 = new Tile(0, 0, mTileSize, aColor);
+    Tile *tile2 = new Tile(1, 0, mTileSize, aColor);
+    Tile *tile3 = new Tile(0, 1, mTileSize, aColor);
+    Tile *tile4 = new Tile(1, 1, mTileSize, aColor);
 
     mTiles.append(tile1);
     mTiles.append(tile2);

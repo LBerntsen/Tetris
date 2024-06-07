@@ -7,7 +7,7 @@
 #include <QGraphicsRectItem>
 #include <QBrush>
 
-Tile::Tile(int aX, int aY,int aXIndex, int aYIndex, int aTileSize, QColor aColor)
+Tile::Tile(int aXIndex, int aYIndex, int aTileSize, QColor aColor)
 {
     mTileSize = aTileSize;
     mTile = new QGraphicsRectItem(0, 0, mTileSize, mTileSize);
