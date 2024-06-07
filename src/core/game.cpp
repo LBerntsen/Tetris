@@ -269,7 +269,7 @@ Game::moveRowDown(int aRemoved)
 void
 Game::newBlock()
 {
-	ZBlock *t = new ZBlock(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 0);
+	ZBlock *t = new ZBlock(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 1000);
 	t->startBlock();
 	mBlock = t;
 	connect(t, &BlockShape::sigPlaceTiles, this, &Game::placeTilesReciever);

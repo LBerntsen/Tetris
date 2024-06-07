@@ -20,7 +20,7 @@ BlockShape::BlockShape(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowLi
     mTimerInterval = aTimerInterval;
 
     mTimer = new QTimer(this);
-    //connect(mTimer, &QTimer::timeout, this, &BlockShape::moveBlockDown);
+    connect(mTimer, &QTimer::timeout, this, &BlockShape::keyDownReciever);
 }
 
 BlockShape::~BlockShape()
@@ -35,7 +35,7 @@ BlockShape::startBlock()
     createBlock(color);
     createGroup();
     setPivotPoint();
-    //mTimer->start(mTimerInterval);
+    mTimer->start(mTimerInterval);
 }
 
 void
