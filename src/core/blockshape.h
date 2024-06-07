@@ -20,8 +20,8 @@ public:
     BlockShape(int aTileSize, int aHeight, int aWidth, QList<QList<QGraphicsItem *> *> aGridRowList, int aNumRows, int aNumCols);
     ~BlockShape();
     void startBlock(GameScene *aScene, int aTimerInterval, int aX, int aY);
-    int keyLeftReciever();
-    int keyRightReciever();
+    void keyLeftReciever();
+    void keyRightReciever();
     void keyDownReciever();
 
 signals:

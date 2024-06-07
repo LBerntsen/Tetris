@@ -31,13 +31,13 @@ Tile::getTile() const
 int
 Tile::getXListIndex() const
 {
-    return mTile->x() / mTileSize;
+    return mTile->scenePos().x() / mTileSize;
 }
 
 int
 Tile::getYListIndex() const
 {
-    return mTile->y() / mTileSize;
+    return mTile->scenePos().y() / mTileSize;
 }
 
 

@@ -34,43 +34,62 @@ BlockShape::startBlock(GameScene *aScene, int aTimerInterval, int aX, int aY)
     //mTimer->start(aTimerInterval);
 }
 
-int
+void
 BlockShape::keyLeftReciever()
 {
-    QPointF tilePos = mTileGroup->pos();
-    int posX = 0;
-
-    if (tilePos.x() == mTileSize)
-        return 0;
-
     for (int i = 0; i < mTiles.size(); i++)
     {
-        if(mGridRowList.at(getYListIndex())->at(getXListIndex() - 1)->isObscuredBy(mTileGroup))
-            return 0;
+        Tile *tile = mTiles[i];
+        QGraphicsItem *tileToCheck = mGridRowList.at(tile->getYListIndex())->at(tile->getXListIndex() - 1);
+        int x = tile->getTile()->scenePos().x();
+        if (tileToCheck->isObscured())
+        {
+            bool isBlocked = true;
+            for (int c = 0; c < mTiles.size(); c++)
+            {
+                if (tileToCheck->isObscuredBy(mTiles[c]->getTile()))
+                    isBlocked = false;
+            }
+            if (isBlocked)
+            {
+                return;
+            }
+        }
+        else if (x - mTileSize == 0)
+        {
+            return;
+        }
     }
-
-    posX = tilePos.x() - mTileSize;
-    tilePos.setX(posX);
-    mTileGroup->setPos(tilePos);
-    return 0;
+    mTileGroup->setX(mTileGroup->x() - mTileSize);
 }
 
-int
+void
 BlockShape::keyRightReciever()
 {
-    QPointF tilePos = mTileGroup->pos();
-    int posX = 0;
-
-    if (tilePos.x() + (mWidth - 1) * mTileSize == mTileSize * (mNumCols - 2))
-        return 0;
-
-    if (mGridRowList.at(getYListIndex())->at(getXListIndex() + 1)->isObscuredBy(mTileGroup))
-        return 0;
-
-    posX = tilePos.x() + mTileSize;
-    tilePos.setX(posX);
-    mTileGroup->setPos(tilePos);
-    return 0;
+    for(int i = 0; i < mTiles.size(); i++)
+    {
+        Tile *tile = mTiles[i];
+        QGraphicsItem *tileToCheck = mGridRowList.at(tile->getYListIndex())->at(tile->getXListIndex() + 1);
+        int x = tile->getTile()->scenePos().x();
+        if(tileToCheck->isObscured())
+        {
+            bool isBlocked = true;
+            for(int c = 0; c < mTiles.size(); c++)
+            {
+                if(tileToCheck->isObscuredBy(mTiles[c]->getTile()))
+                    isBlocked = false;
+            }
+            if(isBlocked)
+            {
+                return;
+            }
+        }
+        else if(x + mTileSize == (mNumCols - 1) * mTileSize)
+        {
+            return;
+        }
+    }
+    mTileGroup->setX(mTileGroup->x() + mTileSize);
 }
 
 void
@@ -83,7 +102,13 @@ BlockShape::keyDownReciever()
         int y = tile->getTile()->scenePos().y();
         if(tileToCheck->isObscured())
         {
-            if(!tileToCheck->isObscuredBy(mTileGroup))
+            bool isBlocked = true;
+            for(int c = 0; c < mTiles.size(); c++)
+            {
+                if (tileToCheck->isObscuredBy(mTiles[c]->getTile()))
+                    isBlocked = false;
+            }
+            if(isBlocked)
             {
                 placeTiles();
                 return;
@@ -94,23 +119,6 @@ BlockShape::keyDownReciever()
             placeTiles();
             return;
         }
-
-        /*
-        int y = mTileGroup->y();
-
-        //COMBINE IFS
-
-        if (mGridRowList.at(getYListIndex() + mHeight)->at(getXListIndex())->isObscured())
-        {
-            placeTiles();
-            return;
-        }
-        else if (y + (mHeight - 1) * mTileSize == (mNumRows - 1) * mTileSize)
-        {
-            placeTiles();
-            return;
-        }
-        */
     }
     mTileGroup->setY(mTileGroup->y() + mTileSize);
 }
