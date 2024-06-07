@@ -8,6 +8,7 @@
 #include <QGraphicsRectItem>
 #include <QBrush>
 #include <QList>
+#include <QRandomGenerator>
 
 // Blocks
 #include "core/Blocks/jblock.h"
@@ -269,8 +270,52 @@ Game::moveRowDown(int aRemoved)
 void
 Game::newBlock()
 {
-	ZBlock *t = new ZBlock(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 1000);
-	t->startBlock();
-	mBlock = t;
-	connect(t, &BlockShape::sigPlaceTiles, this, &Game::placeTilesReciever);
+	switch (QRandomGenerator::global()->bounded(1, 8))
+	{
+		case 1:
+		{
+			JBlock *j = new JBlock(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 1000);
+			mBlock = j;
+			break;
+		}
+		case 2:
+		{
+			LBlock *l = new LBlock(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 1000);
+			mBlock = l;
+			break;
+		}
+		case 3:
+		{
+			ReverseZBlock *reverseZ = new ReverseZBlock(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 1000);
+			mBlock = reverseZ;
+			break;
+		}
+		case 4:
+		{
+			Square *square = new Square(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 1000);
+			mBlock = square;
+			break;
+		}
+		case 5:
+		{
+			StraightBlock *straight = new StraightBlock(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 1000);
+			mBlock = straight;
+			break;
+		}
+		case 6:
+		{
+			TBlock *t = new TBlock(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 1000);
+			mBlock = t;
+			break;
+		}
+		case 7:
+		{
+			ZBlock *z = new ZBlock(getTileSize(), mGridRowList, mScene, getNumRows(), getNumCols(), 1000);
+			mBlock = z;
+			break;
+		}
+	}
+
+	mBlock->startBlock();
+	connect(mBlock, &BlockShape::sigPlaceTiles, this, &Game::placeTilesReciever);
 }
