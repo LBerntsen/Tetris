@@ -2,8 +2,6 @@ Ting å gjøre:
 
 Viktig:
 -Fiks restart
--Fiks custom blokker
--Gjør block klasse abstrakt
 
 Ekstra:
 -Les gjennom kode fjern unødvendig variabler og pekere

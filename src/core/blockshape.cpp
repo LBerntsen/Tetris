@@ -9,11 +9,9 @@
 #include <QTimer>
 #include <QGraphicsItemGroup>
 
-BlockShape::BlockShape(int aTileSize, int aHeight, int aWidth, QList<QList<QGraphicsItem *> *> aGridRowList, int aNumRows, int aNumCols)
+BlockShape::BlockShape(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, int aNumRows, int aNumCols)
 {
     mTileSize = aTileSize;
-    mHeight = aHeight;
-    mWidth = aWidth;
     mNumRows = aNumRows;
     mNumCols = aNumCols;
     mGridRowList = aGridRowList;

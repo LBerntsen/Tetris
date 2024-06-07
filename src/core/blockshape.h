@@ -17,7 +17,7 @@ class QGraphicsItemGroup;
 class BlockShape : public QObject{
     Q_OBJECT
 public:
-    BlockShape(int aTileSize, int aHeight, int aWidth, QList<QList<QGraphicsItem *> *> aGridRowList, int aNumRows, int aNumCols);
+    BlockShape(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, int aNumRows, int aNumCols);
     ~BlockShape();
     void startBlock(GameScene *aScene, int aTimerInterval, int aX, int aY);
     void keyLeftReciever();
@@ -39,8 +39,6 @@ protected:
     int getYListIndex() const;
 
     int mTileSize;
-    int mHeight;
-    int mWidth;
     int mNumRows;
     int mNumCols;
     QList<Tile *> mTiles;

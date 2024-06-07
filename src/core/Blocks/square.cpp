@@ -9,7 +9,7 @@
 #include <QColor>
 #include <QGraphicsRectItem>
 
-Square::Square(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, int aNumRows, int aNumCols) : BlockShape(aTileSize, 2, 2, aGridRowList, aNumRows, aNumCols)
+Square::Square(int aTileSize, QList<QList<QGraphicsItem *> *> aGridRowList, int aNumRows, int aNumCols) : BlockShape(aTileSize, aGridRowList, aNumRows, aNumCols)
 {
 
 }
