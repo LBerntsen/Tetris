@@ -55,7 +55,9 @@ Game::makeGrid(int aTileSize, int aRows, int aCols)
 				tileColor = Qt::white;
 			}
 			QGraphicsRectItem *mTile = new QGraphicsRectItem;
-			mTile = mScene->addRect(x, y, aTileSize, aTileSize, QPen(), QBrush(QColor(tileColor)));
+			mTile = mScene->addRect(0, 0, aTileSize, aTileSize, QPen(), QBrush(QColor(tileColor)));
+			mTile->setX(x);
+			mTile->setY(y);
 			mTile->setZValue(-1);
 			if (col != 0 || col != aCols - 1)
 			{
