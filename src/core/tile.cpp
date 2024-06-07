@@ -1,0 +1,44 @@
+//
+// Created by Lukas Berntsen on 07/06/2024.
+//
+
+#include "tile.h"
+
+#include <QGraphicsRectItem>
+#include <QBrush>
+
+Tile::Tile(int aX, int aY, int aXIndex, int aYIndex, int aTileSize, QColor aColor)
+{
+    mTileSize = aTileSize;
+    mTile = new QGraphicsRectItem(0, 0, mTileSize, mTileSize);
+    mTile->setX(aX + (aXIndex * mTileSize));
+    mTile->setY(aY + (aYIndex * mTileSize));
+    mTile->setZValue(1);
+    mTile->setBrush(QBrush(aColor));
+}
+
+Tile::~Tile()
+{
+
+}
+
+QGraphicsRectItem *
+Tile::getTile() const
+{
+    return mTile;
+}
+
+int
+Tile::getXListIndex() const
+{
+    return mTile->x() / mTileSize;
+}
+
+int
+Tile::getYListIndex() const
+{
+    return mTile->y() / mTileSize;
+}
+
+
+

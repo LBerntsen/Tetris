@@ -1,5 +1,6 @@
 // Local class header file
 #include "core/block.h"
+#include "core/tile.h"
 
 // QT header files
 #include <stdlib.h>
@@ -40,10 +41,12 @@ Block::resetGame()
 void
 Block::newBlock()
 {
-	mBlock = mScene->addRect(0, 0, mTileSize, mTileSize, QPen(), QBrush(QColor(randomColor())));
-	mBlock->setX(mTileSize * (mNumCols / 2));
-	mBlock->setY(mTileSize);
-	mBlock->setZValue(1);
+	mTiles.clear();
+
+	QColor color = randomColor();
+	Tile *tile = new Tile(mTileSize * (mNumCols / 2), mTileSize, 0, 0, mTileSize, color);
+	mTiles.append(tile);
+	mScene->addItem(tile->getTile());
 
 	mTimer->start(mTimerInterval);
 }
@@ -80,56 +83,38 @@ Block::randomColor()
 }
 
 int
-Block::getYListIndex()
-{
-	int y = mBlock->y();
-	y = y / mTileSize;
-
-	return y;
-}
-
-int
-Block::getXListIndex()
-{
-	int x = mBlock->x();
-	x = x / mTileSize;
-	
-	return x;
-}
-
-int
 Block::keyLeftReciever()
 {
-	QPointF blockPos = mBlock->pos();
+	QPointF blockPos = mTiles[0]->getTile()->pos();
 	int posX = 0;
 
 	if (blockPos.x() == mTileSize)
 		return 0;
-	
-	if (mGridRowList.at(getYListIndex())->at(getXListIndex() - 1)->isObscured())
+
+	if (mGridRowList.at(mTiles[0]->getYListIndex())->at(mTiles[0]->getXListIndex() - 1)->isObscured())
 		return 0;
 
 	posX = blockPos.x() - mTileSize;
 	blockPos.setX(posX);
-	mBlock->setPos(blockPos);
+	mTiles[0]->getTile()->setPos(blockPos);
 	return 0;
 }
 
 int
 Block::keyRightReciever()
 {
-	QPointF blockPos = mBlock->pos();
+	QPointF blockPos = mTiles[0]->getTile()->pos();
 	int posX = 0;
 
 	if (blockPos.x() == mTileSize * (mNumCols - 2))
 		return 0;
 	
-	if (mGridRowList.at(getYListIndex())->at(getXListIndex() + 1)->isObscured())
+	if (mGridRowList.at(mTiles[0]->getYListIndex())->at(mTiles[0]->getXListIndex() + 1)->isObscured())
 		return 0;
 
 	posX = blockPos.x() + mTileSize;
 	blockPos.setX(posX);
-	mBlock->setPos(blockPos);
+	mTiles[0]->getTile()->setPos(blockPos);
 	return 0;
 }
 
@@ -142,11 +127,11 @@ Block::keyDownReciever()
 int
 Block::moveBlockDown()
 {
-	int y = mBlock->y();
+	int y = mTiles[0]->getTile()->y();
 
 	//COMBINE IFS
 
-	if (mGridRowList.at(getYListIndex() + 1)->at(getXListIndex())->isObscured())
+	if (mGridRowList.at(mTiles[0]->getYListIndex() + 1)->at(mTiles[0]->getXListIndex())->isObscured())
 	{
 		mTimer->stop();
 
@@ -155,9 +140,9 @@ Block::moveBlockDown()
 		QList<int> yList;
 		QList<QGraphicsItem *> tileList;
 
-		xList.append(getXListIndex());
-		yList.append(getYListIndex());
-		tileList.append(mBlock);
+		xList.append(mTiles[0]->getXListIndex());
+		yList.append(mTiles[0]->getYListIndex());
+		tileList.append(mTiles[0]->getTile());
 		///
 
 		emit sigPlaceTiles(xList, yList, tileList);
@@ -173,9 +158,9 @@ Block::moveBlockDown()
 		QList<int> yList;
 		QList<QGraphicsItem *> tileList;
 
-		xList.append(getXListIndex());
-		yList.append(getYListIndex());
-		tileList.append(mBlock);
+		xList.append(mTiles[0]->getXListIndex());
+		yList.append(mTiles[0]->getYListIndex());
+		tileList.append(mTiles[0]->getTile());
 		///
 
 		emit sigPlaceTiles(xList, yList, tileList);
@@ -183,5 +168,5 @@ Block::moveBlockDown()
 		return 0;
 	}
 
-	mBlock->setY(y + mTileSize);
+	mTiles[0]->getTile()->setY(y + mTileSize);
 }

@@ -9,6 +9,8 @@
 #include <QTimer>
 #include <QList>
 
+class Tile;
+
 class Block : public QObject
 {
 	Q_OBJECT
@@ -26,15 +28,13 @@ signals:
 private:
 	QTimer* mTimer;
 	QColor randomColor();
-	QGraphicsItem *mBlock;
+	QList<Tile *> mTiles;
 	GameScene *mScene;
 	QList<QList<QGraphicsItem *> *> mGridRowList;
 	int mTileSize;
 	int mNumCols;
 	int mNumRows;
 	int mTimerInterval;
-	int getYListIndex();
-	int getXListIndex();
 
 public slots:
 	int keyLeftReciever();

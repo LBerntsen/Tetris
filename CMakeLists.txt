@@ -26,7 +26,9 @@ add_executable(tetris
         src/core/gameScene.h
         src/gui/mainwindow.cpp
         src/gui/mainwindow.h
-        src/gui/mainwindow.ui)
+        src/gui/mainwindow.ui
+        src/core/tile.cpp
+        src/core/tile.h)
 
 target_link_libraries(tetris
         Qt::Core
