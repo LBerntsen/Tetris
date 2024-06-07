@@ -76,22 +76,43 @@ BlockShape::keyRightReciever()
 void
 BlockShape::keyDownReciever()
 {
-    int y = mTileGroup->y();
-
-    //COMBINE IFS
-
-    if (mGridRowList.at(getYListIndex() + mHeight)->at(getXListIndex())->isObscuredBy(mTileGroup))
+    for(int i = 0; i < mTiles.size(); i++)
     {
-        placeTiles();
-        return;
-    }
-    else if (y + (mHeight - 1) * mTileSize == (mNumRows - 2) * mTileSize)
-    {
-        placeTiles();
-        return;
-    }
+        Tile *tile = mTiles[i];
+        QGraphicsItem *tileToCheck = mGridRowList.at(tile->getYListIndex() + 1)->at(tile->getXListIndex());
+        int y = tile->getTile()->scenePos().y();
+        if(tileToCheck->isObscured())
+        {
+            if(!tileToCheck->isObscuredBy(mTileGroup))
+            {
+                placeTiles();
+                return;
+            }
+        }
+        else if(y + mTileSize == (mNumRows - 1) * mTileSize)
+        {
+            placeTiles();
+            return;
+        }
 
-    mTileGroup->setY(y + mTileSize);
+        /*
+        int y = mTileGroup->y();
+
+        //COMBINE IFS
+
+        if (mGridRowList.at(getYListIndex() + mHeight)->at(getXListIndex())->isObscured())
+        {
+            placeTiles();
+            return;
+        }
+        else if (y + (mHeight - 1) * mTileSize == (mNumRows - 1) * mTileSize)
+        {
+            placeTiles();
+            return;
+        }
+        */
+    }
+    mTileGroup->setY(mTileGroup->y() + mTileSize);
 }
 
 void
@@ -108,6 +129,7 @@ BlockShape::placeTiles()
         xList.append(mTiles[i]->getXListIndex());
         yList.append(mTiles[i]->getYListIndex());
         tileList.append(mTiles[i]->getTile());
+        mTileGroup->removeFromGroup(mTiles[i]->getTile());
     }
 
     emit sigPlaceTiles(xList, yList, tileList);
